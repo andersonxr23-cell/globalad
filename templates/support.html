@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AdCreator Pro Support Center — Get help fast via message or direct contact.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formspree.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    <meta name="theme-color" content="#007bff">
+    <title>Support Center — AdCreator Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue-600: #007bff;
+            --blue-700: #0056b3;
+            --blue-800: #003d80;
+            --blue-50:  #e8f4fd;
+            --blue-100: #cce3ff;
+            --red-600:  #dc2626;
+            --red-50:   #fef2f2;
+            --red-100:  #fee2e2;
+            --green-600:#16a34a;
+            --green-50: #f0fdf4;
+            --gray-900: #111827;
+            --gray-700: #374151;
+            --gray-500: #6b7280;
+            --gray-300: #d1d5db;
+            --gray-100: #f3f4f6;
+            --white:    #ffffff;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-card: 0 8px 32px rgba(0,0,0,0.10);
+            --transition: 0.22s ease;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, #dbeafe 0%, #eff6ff 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 16px 48px;
+            color: var(--gray-900);
+        }
+
+        /* ── CARD ── */
+        .support-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        /* ── HEADER BAND ── */
+        .card-header {
+            background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+            padding: 36px 32px 28px;
+            text-align: center;
+            position: relative;
+        }
+
+        .avatar-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .support-image,
+        .img-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.6);
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-placeholder {
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 14px;
+            height: 14px;
+            background: #22c55e;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+        }
+
+        .card-header h1 {
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .card-header .tagline {
+            color: rgba(255,255,255,0.75);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        /* ── EMERGENCY BANNER ── */
+        .emergency-banner {
+            background: var(--red-50);
+            border-left: 4px solid var(--red-600);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .emergency-icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .emergency-text {
+            flex: 1;
+        }
+
+        .emergency-text .label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--red-600);
+            margin-bottom: 2px;
+        }
+
+        .emergency-text a {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--red-600);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .emergency-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── EMAIL BADGE ── */
+        .email-section {
+            padding: 20px 28px 0;
+            text-align: center;
+        }
+
+        .email-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--blue-50);
+            color: var(--blue-700);
+            font-size: 15px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: var(--radius-xl);
+            border: 1.5px dashed var(--blue-600);
+            word-break: break-all;
+        }
+
+        /* ── FORM BODY ── */
+        .card-body {
+            padding: 22px 28px 28px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--gray-100);
+            color: var(--gray-900);
+            transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--blue-600);
+            background: var(--white);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+        }
+
+        /* Input validation */
+        .form-group input:not(:placeholder-shown):invalid {
+            border-color: var(--red-600);
+            background: var(--red-50);
+        }
+
+        .form-group input:not(:placeholder-shown):valid {
+            border-color: var(--green-600);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.6;
+        }
+
+        /* Honeypot — hidden from humans, catches bots */
+        .hp-field {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+            margin-top: 6px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--blue-700), var(--blue-800));
+            box-shadow: 0 4px 16px rgba(0,123,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .submit-btn:focus-visible {
+            outline: 3px solid var(--blue-100);
+            outline-offset: 2px;
+        }
+
+        /* ── FOOTER ── */
+        .card-footer {
+            border-top: 1px solid var(--gray-100);
+            padding: 16px 28px;
+            text-align: center;
+        }
+
+        .card-footer p {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        .card-footer a {
+            color: var(--blue-600);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 11px;
+            color: var(--gray-500);
+        }
+
+        /* ── SUCCESS STATE ── */
+        .success-msg {
+            display: none;
+            background: var(--green-50);
+            border: 1.5px solid #bbf7d0;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--green-600);
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 16px 10px 36px; }
+            .card-header { padding: 28px 20px 22px; }
+            .card-body { padding: 18px 18px 22px; }
+            .email-section { padding: 16px 18px 0; }
+            .emergency-banner { padding: 12px 14px; }
+            .card-footer { padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="support-card" role="main">
+
+    <!-- HEADER -->
+    <div class="card-header">
+        <div class="avatar-wrap">
+            <img src="20260623_070407.jpg" alt="Support agent" class="support-image"
+                 onerror="this.style.display='none'; document.getElementById('placeholder').style.display='flex';">
+            <div class="img-placeholder" id="placeholder" style="display:none;" aria-hidden="true">🎧</div>
+            <div class="online-dot" title="Online now" aria-label="Agent online"></div>
+        </div>
+        <h1>Support Center</h1>
+        <p class="tagline">AdCreator Pro — We reply within 24 hours</p>
+    </div>
+
+    <!-- EMERGENCY CONTACT -->
+    <div class="emergency-banner" role="alert" aria-label="Emergency contact">
+        <div class="emergency-icon" aria-hidden="true">🚨</div>
+        <div class="emergency-text">
+            <div class="label">Emergency Messages</div>
+            <a href="tel:+8801839382360">+880 1839-382360</a>
+        </div>
+    </div>
+
+    <!-- EMAIL DISPLAY -->
+    <div class="email-section">
+        <div class="email-badge">
+            <span aria-hidden="true">📧</span>
+            mswapon502@gmail.com
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card-body">
+        <p class="section-label">Send a Message</p>
+
+        <!--
+            Formspree Setup:
+            1. Go to formspree.io → sign up with mswapon502@gmail.com
+            2. Create a new form → copy your unique ID (e.g. xyzabcde)
+            3. Replace "YOUR_FORM_ID" below with that ID
+        -->
+        <form
+            id="supportForm"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+            novalidate
+            autocomplete="on">
+
+            <!-- Security: hidden fields -->
+            <input type="hidden" name="_subject" value="New Support Request — AdCreator Pro">
+            <input type="hidden" name="_language" value="en">
+
+            <!-- Honeypot anti-spam field (hidden from real users) -->
+            <div class="hp-field" aria-hidden="true">
+                <label for="website">Leave this empty</label>
+                <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                    minlength="2"
+                    maxlength="80"
+                    autocomplete="name"
+                    pattern="[A-Za-z\u0980-\u09FF\s\.\-']{2,80}">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="_replyto"
+                    placeholder="Enter your email address"
+                    required
+                    maxlength="120"
+                    autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Briefly describe your issue"
+                    required
+                    maxlength="120">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Describe the Issue</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Please write the details of your issue or question here..."
+                    required
+                    minlength="10"
+                    maxlength="2000"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">🚀 Send Message</button>
+
+            <div class="success-msg" id="successMsg" role="status">
+                ✅ Message sent! We'll get back to you within 24 hours.
+            </div>
+
+        </form>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+        <p>Or email us directly: <a href="mailto:mswapon502@gmail.com">mswapon502@gmail.com</a></p>
+        <div class="security-note" aria-label="Security information">
+            🔒 Your data is encrypted and never shared with third parties.
+        </div>
+    </div>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    const form = document.getElementById('supportForm');
+    const successMsg = document.getElementById('successMsg');
+
+    /* Rate-limit: max 3 submissions per session */
+    var submitCount = parseInt(sessionStorage.getItem('sc') || '0', 10);
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        /* Honeypot check */
+        var hp = form.querySelector('input[name="_gotcha"]');
+        if (hp && hp.value.trim() !== '') return;
+
+        /* Rate limit */
+        if (submitCount >= 3) {
+            alert('Too many submissions. Please try again later or email us directly.');
+            return;
+        }
+
+        /* Basic client-side sanitization */
+        var nameVal = document.getElementById('name').value.trim();
+        var emailVal = document.getElementById('email').value.trim();
+        var msgVal = document.getElementById('message').value.trim();
+
+        if (nameVal.length < 2 || emailVal.length < 5 || msgVal.length < 10) {
+            alert('Please fill in all fields correctly before sending.');
+            return;
+        }
+
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailVal)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        var btn = form.querySelector('.submit-btn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Sending...';
+
+        var data = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(function (res) {
+            if (res.ok) {
+                submitCount++;
+                sessionStorage.setItem('sc', submitCount);
+                form.reset();
+                successMsg.style.display = 'block';
+                btn.textContent = '✅ Sent!';
+                setTimeout(function () {
+                    btn.disabled = false;
+                    btn.textContent = '🚀 Send Message';
+                }, 4000);
+            } else {
+                btn.disabled = false;
+                btn.textContent = '🚀 Send Message';
+                alert('Something went wrong. Please email us directly at mswapon502@gmail.com');
+            }
+        })
+        .catch(function () {
+            btn.disabled = false;
+            btn.textContent = '🚀 Send Message';
+            alert('Network error. Please check your connection and try again.');
+        });
+    });
+})();
+</script>
+
+</body>
+</html>

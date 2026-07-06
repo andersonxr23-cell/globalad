@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Click Price Calculator</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(145deg,#dbeafe,#eff6ff,#f0fdf4);
+  min-height:100vh;
+  padding:30px 16px 60px;
+  color:#111827;
+}
+h1{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:6px;
+  color:#1e3a8a;
+  letter-spacing:-0.02em;
+}
+.page-sub{
+  text-align:center;
+  font-size:13px;
+  color:#6b7280;
+  margin-bottom:30px;
+}
+
+/* CARD */
+.calc-card{
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.10);
+  max-width:640px;
+  margin:0 auto 28px auto;
+  overflow:hidden;
+}
+
+.calc-header{
+  padding:20px 26px 16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.calc-header.blue{ background:linear-gradient(135deg,#1d4ed8,#2563eb); }
+.calc-header.green{ background:linear-gradient(135deg,#065f46,#059669); }
+
+.calc-header .icon{
+  font-size:28px;
+  flex-shrink:0;
+}
+.calc-header .head-text h2{
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:2px;
+}
+.calc-header .head-text p{
+  color:rgba(255,255,255,0.75);
+  font-size:12px;
+}
+.rate-pill{
+  margin-left:auto;
+  background:rgba(255,255,255,0.22);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  padding:6px 14px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+
+.calc-body{ padding:22px 26px 26px; }
+
+/* SEARCH */
+.search-wrap{
+  position:relative;
+  margin-bottom:16px;
+}
+.search-wrap input{
+  width:100%;
+  padding:10px 14px 10px 38px;
+  border:1.5px solid #e5e7eb;
+  border-radius:10px;
+  font-size:13px;
+  background:#f9fafb;
+  color:#111;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.search-wrap input:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+  background:#fff;
+}
+.search-icon{
+  position:absolute;
+  left:12px;top:50%;
+  transform:translateY(-50%);
+  font-size:15px;
+  pointer-events:none;
+}
+
+/* COUNTRY SELECT GRID */
+.country-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  max-height:300px;
+  overflow-y:auto;
+  padding-right:4px;
+  margin-bottom:18px;
+}
+.country-grid::-webkit-scrollbar{width:5px;}
+.country-grid::-webkit-scrollbar-track{background:#f3f4f6;border-radius:10px;}
+.country-grid::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px;}
+
+.country-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1.5px solid #e5e7eb;
+  border-radius:10px;
+  padding:10px 12px;
+  cursor:pointer;
+  transition:all .18s;
+  background:#fafafa;
+  user-select:none;
+}
+.country-item:hover{ border-color:#93c5fd; background:#eff6ff; }
+.country-item.selected.blue-sel{ border-color:#2563eb; background:#dbeafe; }
+.country-item.selected.green-sel{ border-color:#059669; background:#d1fae5; }
+.country-item .flag{ font-size:18px; flex-shrink:0; }
+.country-item .cname{ font-size:12px; font-weight:600; color:#374151; line-height:1.3; }
+.country-item .cname small{ display:block; font-weight:400; color:#9ca3af; font-size:10px; }
+
+.qty-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.qty-row label{
+  font-size:13px;
+  font-weight:600;
+  color:#374151;
+  white-space:nowrap;
+}
+.qty-row input[type=number]{
+  flex:1;
+  min-width:120px;
+  padding:10px 12px;
+  border:1.5px solid #e5e7eb;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:600;
+  color:#111;
+  background:#f9fafb;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.qty-row input:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+  background:#fff;
+}
+
+/* RESULT BOX */
+.result-box{
+  border-radius:12px;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.result-box.blue-res{ background:#dbeafe; border:1.5px solid #93c5fd; }
+.result-box.green-res{ background:#d1fae5; border:1.5px solid #6ee7b7; }
+
+.result-box .res-label{ font-size:12px; font-weight:600; color:#6b7280; }
+.result-box .res-country{ font-size:13px; font-weight:700; color:#111; margin-top:2px; }
+.result-box .res-amount{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-0.03em;
+}
+.result-box.blue-res .res-amount{ color:#1d4ed8; }
+.result-box.green-res .res-amount{ color:#065f46; }
+
+.result-box .res-detail{
+  font-size:11px;
+  color:#6b7280;
+  margin-top:3px;
+}
+
+.reset-btn{
+  margin-top:14px;
+  width:100%;
+  padding:11px;
+  border:1.5px solid #e5e7eb;
+  border-radius:10px;
+  background:#fff;
+  font-size:13px;
+  font-weight:600;
+  color:#6b7280;
+  cursor:pointer;
+  transition:all .18s;
+}
+.reset-btn:hover{ background:#f3f4f6; color:#374151; }
+
+.separator{
+  text-align:center;
+  font-size:12px;
+  color:#9ca3af;
+  margin:0 auto 28px;
+  max-width:640px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.separator::before,.separator::after{
+  content:'';flex:1;height:1px;background:#e5e7eb;
+}
+
+.note{
+  max-width:640px;
+  margin:0 auto;
+  text-align:center;
+  font-size:11px;
+  color:#9ca3af;
+}
+.hidden{ display:none; }
+
+@media(max-width:480px){
+  .country-grid{grid-template-columns:1fr;}
+  .calc-header{flex-wrap:wrap;}
+  .rate-pill{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<h1>🌍 Ad Click Price Calculator</h1>
+<p class="page-sub">Calculate your total ad revenue by country and click count</p>
+
+<!-- ═══════════════════════════════════════
+     CALCULATOR 1 — Americas & Europe (5¢)
+════════════════════════════════════════ -->
+<div class="calc-card">
+  <div class="calc-header blue">
+    <div class="icon">🌎🌍</div>
+    <div class="head-text">
+      <h2>Americas &amp; Europe</h2>
+      <p>All countries in North America, South America &amp; Europe</p>
+    </div>
+    <div class="rate-pill">5¢ / click</div>
+  </div>
+  <div class="calc-body">
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search1" placeholder="Search country..." oninput="filterCountries(1)">
+    </div>
+
+    <div class="country-grid" id="grid1"></div>
+
+    <div class="qty-row">
+      <label for="clicks1">Number of Clicks:</label>
+      <input type="number" id="clicks1" min="0" value="1000" oninput="calculate(1)">
+    </div>
+
+    <div class="result-box blue-res" id="result1">
+      <div>
+        <div class="res-label">Selected Country</div>
+        <div class="res-country" id="res1-country">— None selected —</div>
+        <div class="res-detail" id="res1-detail"></div>
+      </div>
+      <div style="text-align:right;">
+        <div class="res-label">Total Revenue</div>
+        <div class="res-amount" id="res1-amount">$0.00</div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetCalc(1)">↺ Reset</button>
+  </div>
+</div>
+
+<div class="separator">Independent calculators — totals do not combine</div>
+
+<!-- ═══════════════════════════════════════
+     CALCULATOR 2 — Rest of World (3¢)
+════════════════════════════════════════ -->
+<div class="calc-card">
+  <div class="calc-header green">
+    <div class="icon">🌏🌐</div>
+    <div class="head-text">
+      <h2>Rest of the World</h2>
+      <p>All countries in Asia, Africa, Oceania &amp; Middle East</p>
+    </div>
+    <div class="rate-pill">3¢ / click</div>
+  </div>
+  <div class="calc-body">
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search2" placeholder="Search country..." oninput="filterCountries(2)">
+    </div>
+
+    <div class="country-grid" id="grid2"></div>
+
+    <div class="qty-row">
+      <label for="clicks2">Number of Clicks:</label>
+      <input type="number" id="clicks2" min="0" value="1000" oninput="calculate(2)">
+    </div>
+
+    <div class="result-box green-res" id="result2">
+      <div>
+        <div class="res-label">Selected Country</div>
+        <div class="res-country" id="res2-country">— None selected —</div>
+        <div class="res-detail" id="res2-detail"></div>
+      </div>
+      <div style="text-align:right;">
+        <div class="res-label">Total Revenue</div>
+        <div class="res-amount" id="res2-amount">$0.00</div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetCalc(2)">↺ Reset</button>
+  </div>
+</div>
+
+<p class="note">💡 Each calculator works independently. The totals never combine with each other.</p>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const AMERICAS_EUROPE = [
+  // North America
+  {flag:'🇺🇸',name:'United States',region:'North America'},
+  {flag:'🇨🇦',name:'Canada',region:'North America'},
+  {flag:'🇲🇽',name:'Mexico',region:'North America'},
+  {flag:'🇬🇹',name:'Guatemala',region:'North America'},
+  {flag:'🇧🇿',name:'Belize',region:'North America'},
+  {flag:'🇭🇳',name:'Honduras',region:'North America'},
+  {flag:'🇸🇻',name:'El Salvador',region:'North America'},
+  {flag:'🇳🇮',name:'Nicaragua',region:'North America'},
+  {flag:'🇨🇷',name:'Costa Rica',region:'North America'},
+  {flag:'🇵🇦',name:'Panama',region:'North America'},
+  {flag:'🇨🇺',name:'Cuba',region:'Caribbean'},
+  {flag:'🇯🇲',name:'Jamaica',region:'Caribbean'},
+  {flag:'🇭🇹',name:'Haiti',region:'Caribbean'},
+  {flag:'🇩🇴',name:'Dominican Republic',region:'Caribbean'},
+  {flag:'🇵🇷',name:'Puerto Rico',region:'Caribbean'},
+  {flag:'🇹🇹',name:'Trinidad & Tobago',region:'Caribbean'},
+  {flag:'🇧🇧',name:'Barbados',region:'Caribbean'},
+  {flag:'🇱🇨',name:'Saint Lucia',region:'Caribbean'},
+  {flag:'🇬🇩',name:'Grenada',region:'Caribbean'},
+  {flag:'🇻🇨',name:'St. Vincent & Grenadines',region:'Caribbean'},
+  {flag:'🇦🇬',name:'Antigua & Barbuda',region:'Caribbean'},
+  {flag:'🇩🇲',name:'Dominica',region:'Caribbean'},
+  {flag:'🇰🇳',name:'Saint Kitts & Nevis',region:'Caribbean'},
+  {flag:'🇧🇸',name:'The Bahamas',region:'Caribbean'},
+  // South America
+  {flag:'🇧🇷',name:'Brazil',region:'South America'},
+  {flag:'🇦🇷',name:'Argentina',region:'South America'},
+  {flag:'🇨🇱',name:'Chile',region:'South America'},
+  {flag:'🇨🇴',name:'Colombia',region:'South America'},
+  {flag:'🇵🇪',name:'Peru',region:'South America'},
+  {flag:'🇻🇪',name:'Venezuela',region:'South America'},
+  {flag:'🇪🇨',name:'Ecuador',region:'South America'},
+  {flag:'🇧🇴',name:'Bolivia',region:'South America'},
+  {flag:'🇵🇾',name:'Paraguay',region:'South America'},
+  {flag:'🇺🇾',name:'Uruguay',region:'South America'},
+  {flag:'🇬🇾',name:'Guyana',region:'South America'},
+  {flag:'🇸🇷',name:'Suriname',region:'South America'},
+  {flag:'🇫🇷',name:'French Guiana',region:'South America'},
+  // Europe
+  {flag:'🇩🇪',name:'Germany',region:'Europe'},
+  {flag:'🇫🇷',name:'France',region:'Europe'},
+  {flag:'🇬🇧',name:'United Kingdom',region:'Europe'},
+  {flag:'🇮🇹',name:'Italy',region:'Europe'},
+  {flag:'🇪🇸',name:'Spain',region:'Europe'},
+  {flag:'🇳🇱',name:'Netherlands',region:'Europe'},
+  {flag:'🇧🇪',name:'Belgium',region:'Europe'},
+  {flag:'🇨🇭',name:'Switzerland',region:'Europe'},
+  {flag:'🇦🇹',name:'Austria',region:'Europe'},
+  {flag:'🇸🇪',name:'Sweden',region:'Europe'},
+  {flag:'🇳🇴',name:'Norway',region:'Europe'},
+  {flag:'🇩🇰',name:'Denmark',region:'Europe'},
+  {flag:'🇫🇮',name:'Finland',region:'Europe'},
+  {flag:'🇮🇪',name:'Ireland',region:'Europe'},
+  {flag:'🇵🇹',name:'Portugal',region:'Europe'},
+  {flag:'🇬🇷',name:'Greece',region:'Europe'},
+  {flag:'🇵🇱',name:'Poland',region:'Europe'},
+  {flag:'🇨🇿',name:'Czech Republic',region:'Europe'},
+  {flag:'🇸🇰',name:'Slovakia',region:'Europe'},
+  {flag:'🇭🇺',name:'Hungary',region:'Europe'},
+  {flag:'🇷🇴',name:'Romania',region:'Europe'},
+  {flag:'🇧🇬',name:'Bulgaria',region:'Europe'},
+  {flag:'🇭🇷',name:'Croatia',region:'Europe'},
+  {flag:'🇸🇮',name:'Slovenia',region:'Europe'},
+  {flag:'🇷🇸',name:'Serbia',region:'Europe'},
+  {flag:'🇧🇦',name:'Bosnia & Herzegovina',region:'Europe'},
+  {flag:'🇲🇪',name:'Montenegro',region:'Europe'},
+  {flag:'🇽🇰',name:'Kosovo',region:'Europe'},
+  {flag:'🇲🇰',name:'North Macedonia',region:'Europe'},
+  {flag:'🇦🇱',name:'Albania',region:'Europe'},
+  {flag:'🇱🇹',name:'Lithuania',region:'Europe'},
+  {flag:'🇱🇻',name:'Latvia',region:'Europe'},
+  {flag:'🇪🇪',name:'Estonia',region:'Europe'},
+  {flag:'🇧🇾',name:'Belarus',region:'Europe'},
+  {flag:'🇺🇦',name:'Ukraine',region:'Europe'},
+  {flag:'🇲🇩',name:'Moldova',region:'Europe'},
+  {flag:'🇷🇺',name:'Russia',region:'Europe'},
+  {flag:'🇮🇸',name:'Iceland',region:'Europe'},
+  {flag:'🇱🇺',name:'Luxembourg',region:'Europe'},
+  {flag:'🇲🇹',name:'Malta',region:'Europe'},
+  {flag:'🇨🇾',name:'Cyprus',region:'Europe'},
+  {flag:'🇱🇮',name:'Liechtenstein',region:'Europe'},
+  {flag:'🇲🇨',name:'Monaco',region:'Europe'},
+  {flag:'🇸🇲',name:'San Marino',region:'Europe'},
+  {flag:'🇻🇦',name:'Vatican City',region:'Europe'},
+  {flag:'🇦🇩',name:'Andorra',region:'Europe'},
+  {flag:'🇬🇪',name:'Georgia',region:'Europe'},
+  {flag:'🇦🇲',name:'Armenia',region:'Europe'},
+  {flag:'🇦🇿',name:'Azerbaijan',region:'Europe'},
+];
+
+const REST_OF_WORLD = [
+  // Asia
+  {flag:'🇨🇳',name:'China',region:'East Asia'},
+  {flag:'🇯🇵',name:'Japan',region:'East Asia'},
+  {flag:'🇰🇷',name:'South Korea',region:'East Asia'},
+  {flag:'🇰🇵',name:'North Korea',region:'East Asia'},
+  {flag:'🇲🇳',name:'Mongolia',region:'East Asia'},
+  {flag:'🇹🇼',name:'Taiwan',region:'East Asia'},
+  {flag:'🇭🇰',name:'Hong Kong',region:'East Asia'},
+  {flag:'🇲🇴',name:'Macau',region:'East Asia'},
+  {flag:'🇮🇳',name:'India',region:'South Asia'},
+  {flag:'🇵🇰',name:'Pakistan',region:'South Asia'},
+  {flag:'🇧🇩',name:'Bangladesh',region:'South Asia'},
+  {flag:'🇱🇰',name:'Sri Lanka',region:'South Asia'},
+  {flag:'🇳🇵',name:'Nepal',region:'South Asia'},
+  {flag:'🇧🇹',name:'Bhutan',region:'South Asia'},
+  {flag:'🇲🇻',name:'Maldives',region:'South Asia'},
+  {flag:'🇦🇫',name:'Afghanistan',region:'South Asia'},
+  {flag:'🇹🇭',name:'Thailand',region:'Southeast Asia'},
+  {flag:'🇻🇳',name:'Vietnam',region:'Southeast Asia'},
+  {flag:'🇮🇩',name:'Indonesia',region:'Southeast Asia'},
+  {flag:'🇲🇾',name:'Malaysia',region:'Southeast Asia'},
+  {flag:'🇵🇭',name:'Philippines',region:'Southeast Asia'},
+  {flag:'🇸🇬',name:'Singapore',region:'Southeast Asia'},
+  {flag:'🇲🇲',name:'Myanmar',region:'Southeast Asia'},
+  {flag:'🇰🇭',name:'Cambodia',region:'Southeast Asia'},
+  {flag:'🇱🇦',name:'Laos',region:'Southeast Asia'},
+  {flag:'🇧🇳',name:'Brunei',region:'Southeast Asia'},
+  {flag:'🇹🇱',name:'Timor-Leste',region:'Southeast Asia'},
+  // Middle East
+  {flag:'🇸🇦',name:'Saudi Arabia',region:'Middle East'},
+  {flag:'🇦🇪',name:'UAE',region:'Middle East'},
+  {flag:'🇶🇦',name:'Qatar',region:'Middle East'},
+  {flag:'🇰🇼',name:'Kuwait',region:'Middle East'},
+  {flag:'🇧🇭',name:'Bahrain',region:'Middle East'},
+  {flag:'🇴🇲',name:'Oman',region:'Middle East'},
+  {flag:'🇾🇪',name:'Yemen',region:'Middle East'},
+  {flag:'🇮🇷',name:'Iran',region:'Middle East'},
+  {flag:'🇮🇶',name:'Iraq',region:'Middle East'},
+  {flag:'🇸🇾',name:'Syria',region:'Middle East'},
+  {flag:'🇱🇧',name:'Lebanon',region:'Middle East'},
+  {flag:'🇯🇴',name:'Jordan',region:'Middle East'},
+  {flag:'🇮🇱',name:'Israel',region:'Middle East'},
+  {flag:'🇵🇸',name:'Palestine',region:'Middle East'},
+  {flag:'🇹🇷',name:'Turkey',region:'Middle East'},
+  // Central Asia
+  {flag:'🇰🇿',name:'Kazakhstan',region:'Central Asia'},
+  {flag:'🇺🇿',name:'Uzbekistan',region:'Central Asia'},
+  {flag:'🇹🇲',name:'Turkmenistan',region:'Central Asia'},
+  {flag:'🇹🇯',name:'Tajikistan',region:'Central Asia'},
+  {flag:'🇰🇬',name:'Kyrgyzstan',region:'Central Asia'},
+  // Africa
+  {flag:'🇳🇬',name:'Nigeria',region:'Africa'},
+  {flag:'🇪🇹',name:'Ethiopia',region:'Africa'},
+  {flag:'🇿🇦',name:'South Africa',region:'Africa'},
+  {flag:'🇰🇪',name:'Kenya',region:'Africa'},
+  {flag:'🇹🇿',name:'Tanzania',region:'Africa'},
+  {flag:'🇺🇬',name:'Uganda',region:'Africa'},
+  {flag:'🇬🇭',name:'Ghana',region:'Africa'},
+  {flag:'🇨🇲',name:'Cameroon',region:'Africa'},
+  {flag:'🇨🇮',name:"Côte d'Ivoire",region:'Africa'},
+  {flag:'🇸🇳',name:'Senegal',region:'Africa'},
+  {flag:'🇲🇱',name:'Mali',region:'Africa'},
+  {flag:'🇿🇼',name:'Zimbabwe',region:'Africa'},
+  {flag:'🇿🇲',name:'Zambia',region:'Africa'},
+  {flag:'🇲🇿',name:'Mozambique',region:'Africa'},
+  {flag:'🇲🇬',name:'Madagascar',region:'Africa'},
+  {flag:'🇷🇼',name:'Rwanda',region:'Africa'},
+  {flag:'🇧🇫',name:'Burkina Faso',region:'Africa'},
+  {flag:'🇸🇩',name:'Sudan',region:'Africa'},
+  {flag:'🇸🇸',name:'South Sudan',region:'Africa'},
+  {flag:'🇦🇴',name:'Angola',region:'Africa'},
+  {flag:'🇩🇿',name:'Algeria',region:'Africa'},
+  {flag:'🇲🇦',name:'Morocco',region:'Africa'},
+  {flag:'🇹🇳',name:'Tunisia',region:'Africa'},
+  {flag:'🇱🇾',name:'Libya',region:'Africa'},
+  {flag:'🇪🇬',name:'Egypt',region:'Africa'},
+  {flag:'🇸🇴',name:'Somalia',region:'Africa'},
+  {flag:'🇪🇷',name:'Eritrea',region:'Africa'},
+  {flag:'🇩🇯',name:'Djibouti',region:'Africa'},
+  {flag:'🇨🇩',name:'DR Congo',region:'Africa'},
+  {flag:'🇨🇬',name:'Republic of Congo',region:'Africa'},
+  {flag:'🇬🇦',name:'Gabon',region:'Africa'},
+  {flag:'🇬🇶',name:'Equatorial Guinea',region:'Africa'},
+  {flag:'🇨🇫',name:'Central African Rep.',region:'Africa'},
+  {flag:'🇹🇩',name:'Chad',region:'Africa'},
+  {flag:'🇳🇪',name:'Niger',region:'Africa'},
+  {flag:'🇲🇷',name:'Mauritania',region:'Africa'},
+  {flag:'🇬🇲',name:'Gambia',region:'Africa'},
+  {flag:'🇬🇼',name:'Guinea-Bissau',region:'Africa'},
+  {flag:'🇬🇳',name:'Guinea',region:'Africa'},
+  {flag:'🇸🇱',name:'Sierra Leone',region:'Africa'},
+  {flag:'🇱🇷',name:'Liberia',region:'Africa'},
+  {flag:'🇹🇬',name:'Togo',region:'Africa'},
+  {flag:'🇧🇯',name:'Benin',region:'Africa'},
+  {flag:'🇳🇦',name:'Namibia',region:'Africa'},
+  {flag:'🇧🇼',name:'Botswana',region:'Africa'},
+  {flag:'🇸🇿',name:'Eswatini',region:'Africa'},
+  {flag:'🇱🇸',name:'Lesotho',region:'Africa'},
+  {flag:'🇲🇼',name:'Malawi',region:'Africa'},
+  {flag:'🇧🇮',name:'Burundi',region:'Africa'},
+  {flag:'🇰🇲',name:'Comoros',region:'Africa'},
+  {flag:'🇨🇻',name:'Cape Verde',region:'Africa'},
+  {flag:'🇸🇹',name:'São Tomé & Príncipe',region:'Africa'},
+  {flag:'🇲🇺',name:'Mauritius',region:'Africa'},
+  {flag:'🇸🇨',name:'Seychelles',region:'Africa'},
+  // Oceania
+  {flag:'🇦🇺',name:'Australia',region:'Oceania'},
+  {flag:'🇳🇿',name:'New Zealand',region:'Oceania'},
+  {flag:'🇵🇬',name:'Papua New Guinea',region:'Oceania'},
+  {flag:'🇫🇯',name:'Fiji',region:'Oceania'},
+  {flag:'🇸🇧',name:'Solomon Islands',region:'Oceania'},
+  {flag:'🇻🇺',name:'Vanuatu',region:'Oceania'},
+  {flag:'🇼🇸',name:'Samoa',region:'Oceania'},
+  {flag:'🇹🇴',name:'Tonga',region:'Oceania'},
+  {flag:'🇰🇮',name:'Kiribati',region:'Oceania'},
+  {flag:'🇫🇲',name:'Micronesia',region:'Oceania'},
+  {flag:'🇲🇭',name:'Marshall Islands',region:'Oceania'},
+  {flag:'🇵🇼',name:'Palau',region:'Oceania'},
+  {flag:'🇳🇷',name:'Nauru',region:'Oceania'},
+  {flag:'🇹🇻',name:'Tuvalu',region:'Oceania'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────
+const state = {
+  1: { selected: null, filteredList: [...AMERICAS_EUROPE] },
+  2: { selected: null, filteredList: [...REST_OF_WORLD] }
+};
+
+// ── BUILD GRIDS ────────────────────────────────────────────────────────
+function buildGrid(calcNum) {
+  const grid = document.getElementById('grid' + calcNum);
+  const list = calcNum === 1 ? state[1].filteredList : state[2].filteredList;
+  const selClass = calcNum === 1 ? 'blue-sel' : 'green-sel';
+  grid.innerHTML = '';
+  list.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'country-item' + (state[calcNum].selected === c.name ? ' selected ' + selClass : '');
+    div.innerHTML = `<span class="flag">${c.flag}</span><div class="cname">${c.name}<small>${c.region}</small></div>`;
+    div.addEventListener('click', () => selectCountry(calcNum, c.name, div));
+    grid.appendChild(div);
+  });
+}
+
+function selectCountry(calcNum, name, el) {
+  const selClass = calcNum === 1 ? 'blue-sel' : 'green-sel';
+  document.querySelectorAll('#grid' + calcNum + ' .country-item').forEach(d => d.classList.remove('selected', selClass));
+  if (state[calcNum].selected === name) {
+    state[calcNum].selected = null;
+  } else {
+    state[calcNum].selected = name;
+    el.classList.add('selected', selClass);
+  }
+  calculate(calcNum);
+}
+
+function filterCountries(calcNum) {
+  const q = document.getElementById('search' + calcNum).value.toLowerCase().trim();
+  const source = calcNum === 1 ? AMERICAS_EUROPE : REST_OF_WORLD;
+  state[calcNum].filteredList = q
+    ? source.filter(c => c.name.toLowerCase().includes(q) || c.region.toLowerCase().includes(q))
+    : [...source];
+  buildGrid(calcNum);
+}
+
+function calculate(calcNum) {
+  const rate = calcNum === 1 ? 0.05 : 0.03;
+  const clicks = Math.max(0, parseInt(document.getElementById('clicks' + calcNum).value) || 0);
+  const countryName = state[calcNum].selected;
+  const total = (clicks * rate).toFixed(2);
+
+  document.getElementById('res' + calcNum + '-country').textContent = countryName || '— None selected —';
+  document.getElementById('res' + calcNum + '-amount').textContent = '$' + total;
+  document.getElementById('res' + calcNum + '-detail').textContent =
+    countryName ? `${clicks.toLocaleString()} clicks × $${rate.toFixed(2)} = $${total}` : '';
+}
+
+function resetCalc(calcNum) {
+  state[calcNum].selected = null;
+  document.getElementById('clicks' + calcNum).value = 1000;
+  document.getElementById('search' + calcNum).value = '';
+  state[calcNum].filteredList = calcNum === 1 ? [...AMERICAS_EUROPE] : [...REST_OF_WORLD];
+  buildGrid(calcNum);
+  calculate(calcNum);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+buildGrid(1);
+buildGrid(2);
+calculate(1);
+calculate(2);
+</script>
+</body>
+</html>

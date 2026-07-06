@@ -1,0 +1,309 @@
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#1e1b4b,#4338ca);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem}
+.tabs{display:flex;background:rgba(255,255,255,0.12);border-radius:14px;padding:5px;gap:5px;margin-bottom:1.5rem;width:100%;max-width:700px}
+.tab-btn{flex:1;padding:10px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;color:rgba(255,255,255,0.7)}
+.tab-btn.active{background:#fff;color:#4F46E5;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.page{display:none;width:100%;max-width:700px}
+.page.active{display:block}
+.card{background:#fff;border-radius:20px;padding:2.5rem 2.5rem;box-shadow:0 25px 60px rgba(0,0,0,0.35)}
+.card-header{text-align:center;margin-bottom:1.8rem}
+.logo{width:54px;height:54px;background:linear-gradient(135deg,#4F46E5,#7C3AED);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 1rem;box-shadow:0 4px 15px rgba(79,70,229,0.4)}
+h1{font-size:22px;color:#1e1b4b;font-weight:700}
+.campaign-title{font-size:38px;font-weight:800;background:linear-gradient(135deg,#4F46E5,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:6px;line-height:1.15;letter-spacing:-1px}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6d28d9;border-left:3px solid #6d28d9;padding-left:8px;margin:1.4rem 0 .9rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:12px;font-weight:600;color:#374151}
+.field input{padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;color:#1f2937;background:#f9fafb;transition:all .2s;outline:none;width:100%}
+.field input:focus{border-color:#6d28d9;background:#fff;box-shadow:0 0 0 3px rgba(109,40,217,.12)}
+.field input.err{border-color:#ef4444;background:#fef2f2}
+.emsg{font-size:11px;color:#ef4444;display:none}
+.emsg.show{display:block}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:44px}
+.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#6b7280;font-size:17px;padding:0}
+.sbar{height:4px;border-radius:4px;background:#e5e7eb;margin-top:6px;overflow:hidden}
+.sfill{height:100%;border-radius:4px;width:0;transition:width .3s,background .3s}
+.stxt{font-size:11px;color:#6b7280;margin-top:4px}
+.terms-box{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:14px;font-size:12px;color:#4b5563;max-height:100px;overflow-y:auto;margin-bottom:12px;line-height:1.7}
+.check-row{display:flex;align-items:flex-start;gap:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px}
+.check-row input[type=checkbox]{width:18px;height:18px;accent-color:#6d28d9;cursor:pointer;margin-top:2px;flex-shrink:0}
+.check-row label{font-size:13px;color:#374151;cursor:pointer;line-height:1.5}
+.check-row label a{color:#6d28d9;text-decoration:none;font-weight:600}
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .2s;margin-top:8px;box-shadow:0 4px 15px rgba(79,70,229,.35)}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,70,229,.45)}
+.submit-btn:disabled{background:#9ca3af;box-shadow:none;cursor:not-allowed;transform:none}
+.forgot-link{display:block;text-align:right;font-size:13px;color:#6d28d9;text-decoration:none;font-weight:600;margin-top:-6px;margin-bottom:10px;cursor:pointer}
+.forgot-link:hover{text-decoration:underline}
+.success-msg{display:none;text-align:center;padding:1.5rem;background:#f0fdf4;border:1px solid #86efac;border-radius:12px;margin-top:1rem}
+.success-msg h3{color:#16a34a;font-size:18px}
+.success-msg p{color:#4b5563;font-size:13px;margin-top:6px}
+.reset-box{display:none;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:1.2rem;margin-top:1rem}
+.reset-box p{font-size:13px;color:#1e40af;margin-bottom:10px}
+.divider{text-align:center;font-size:12px;color:#9ca3af;margin:1.2rem 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:#e5e7eb}
+.divider::before{left:0}.divider::after{right:0}
+.subtitle{font-size:13px;color:#6b7280;margin-top:4px}
+</style>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showPage('reg',this)">📝 Registration</button>
+  <button class="tab-btn" onclick="showPage('login',this)">🔑 Login</button>
+</div>
+
+<!-- REGISTRATION PAGE -->
+<div class="page active" id="page-reg">
+<div class="card">
+  <div class="card-header">
+    <div class="logo">📝</div>
+    <h1>Create Your Account</h1>
+    <div class="campaign-title">Global Ad Campaign</div>
+  </div>
+  <form id="regForm" novalidate autocomplete="off">
+    <input type="hidden" id="csrf_reg">
+    <input type="hidden" id="ts_reg">
+
+    <div class="section-label">👤 Personal Information</div>
+    <div class="field">
+      <label for="fullName">Full Name *</label>
+      <input type="text" id="fullName" placeholder="e.g. Rahim Uddin Ahmed" maxlength="100">
+      <span class="emsg" id="e-fullName">Please enter your full name (min 3 characters).</span>
+    </div>
+
+    <div class="section-label">🏠 Address Details</div>
+    <div class="grid-3">
+      <div class="field">
+        <label for="houseNo">House / Flat No. *</label>
+        <input type="text" id="houseNo" placeholder="e.g. 12A" maxlength="20">
+        <span class="emsg" id="e-houseNo">Required.</span>
+      </div>
+      <div class="field">
+        <label for="roadNo">Road No. / Name *</label>
+        <input type="text" id="roadNo" placeholder="e.g. Road 5" maxlength="60">
+        <span class="emsg" id="e-roadNo">Required.</span>
+      </div>
+      <div class="field">
+        <label for="policeStation">Police Station *</label>
+        <input type="text" id="policeStation" placeholder="e.g. Dhanmondi" maxlength="60">
+        <span class="emsg" id="e-policeStation">Required.</span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="district">District / Province *</label>
+      <input type="text" id="district" placeholder="e.g. Dhaka" maxlength="60">
+      <span class="emsg" id="e-district">Please enter your district.</span>
+    </div>
+
+    <div class="section-label">📧 Account Credentials</div>
+    <div class="field">
+      <label for="regEmail">Gmail Address *</label>
+      <input type="email" id="regEmail" placeholder="yourname@gmail.com" maxlength="100">
+      <span class="emsg" id="e-regEmail">Please enter a valid Gmail address.</span>
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label for="regPw">Password *</label>
+        <div class="pass-wrap">
+          <input type="password" id="regPw" placeholder="Min 8 chars" maxlength="64">
+          <button type="button" class="eye-btn" onclick="togglePw('regPw')">👁️</button>
+        </div>
+        <div class="sbar"><div class="sfill" id="sfill"></div></div>
+        <span class="stxt" id="stxt">Strength: not entered</span>
+        <span class="emsg" id="e-regPw">Min 8 chars: upper, lower, number &amp; symbol.</span>
+      </div>
+      <div class="field">
+        <label for="regCPw">Confirm Password *</label>
+        <div class="pass-wrap">
+          <input type="password" id="regCPw" placeholder="Re-enter password" maxlength="64">
+          <button type="button" class="eye-btn" onclick="togglePw('regCPw')">👁️</button>
+        </div>
+        <span class="emsg" id="e-regCPw">Passwords do not match.</span>
+      </div>
+    </div>
+
+    <div class="section-label">📄 Terms &amp; Conditions</div>
+    <div class="terms-box">
+      <strong>Terms &amp; Conditions</strong><br><br>
+      By registering, you agree to our policies:<br>
+      1. Your personal data is encrypted and stored securely (AES-256).<br>
+      2. We never sell or share your data with third parties without consent.<br>
+      3. You must provide accurate information. False data leads to account suspension.<br>
+      4. You are responsible for keeping your password confidential.<br>
+      5. We may send service-related emails to your registered Gmail.<br>
+      6. Accounts inactive for 12 months may be deactivated after notice.<br>
+      7. Any abuse of the platform will result in permanent ban.<br>
+      8. These terms are governed by the laws of Bangladesh.
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="agreeTerms">
+      <label for="agreeTerms">I have read and agree to the <a href="#" onclick="return false">Terms &amp; Conditions</a> and <a href="#" onclick="return false">Privacy Policy</a> of this platform.</label>
+    </div>
+    <span class="emsg" id="e-terms" style="margin-bottom:10px">You must accept the terms to continue.</span>
+
+    <button type="submit" class="submit-btn" id="regBtn">🔐 Register Securely</button>
+  </form>
+  <div class="success-msg" id="regSuccess">
+    <h3>🎉 Registration Successful!</h3>
+    <p>Your account has been created. Please check your Gmail to verify your account.</p>
+  </div>
+</div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="page" id="page-login">
+<div class="card">
+  <div class="card-header">
+    <div class="logo">🔑</div>
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Login to your account securely.</p>
+  </div>
+  <form id="loginForm" novalidate autocomplete="off">
+    <input type="hidden" id="csrf_login">
+
+    <div class="section-label">📧 Account Credentials</div>
+    <div class="field">
+      <label for="loginEmail">Gmail Address *</label>
+      <input type="email" id="loginEmail" placeholder="yourname@gmail.com" maxlength="100">
+      <span class="emsg" id="e-loginEmail">Please enter a valid Gmail address.</span>
+    </div>
+    <div class="field">
+      <label for="loginPw">Password *</label>
+      <div class="pass-wrap">
+        <input type="password" id="loginPw" placeholder="Enter your password" maxlength="64">
+        <button type="button" class="eye-btn" onclick="togglePw('loginPw')">👁️</button>
+      </div>
+      <span class="emsg" id="e-loginPw">Password is required.</span>
+    </div>
+
+    <span class="forgot-link" onclick="toggleReset()">🔓 Forgot Password? Reset here</span>
+
+    <div class="reset-box" id="resetBox">
+      <p>Enter your registered Gmail to receive a password reset link.</p>
+      <div class="field">
+        <label for="resetEmail">Registered Gmail *</label>
+        <input type="email" id="resetEmail" placeholder="yourname@gmail.com" maxlength="100">
+        <span class="emsg" id="e-resetEmail">Please enter a valid Gmail address.</span>
+      </div>
+      <button type="button" class="submit-btn" style="margin-top:4px;padding:11px" onclick="sendReset()">📨 Send Reset Link</button>
+      <div class="success-msg" id="resetSuccess" style="margin-top:10px">
+        <h3>📬 Reset Link Sent!</h3>
+        <p>Check your Gmail inbox for the password reset link.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="loginBtn">🔐 Login Securely</button>
+  </form>
+  <div class="success-msg" id="loginSuccess">
+    <h3>✅ Login Successful!</h3>
+    <p>Welcome back! You are now securely logged in.</p>
+  </div>
+  <div class="divider">or</div>
+  <p style="text-align:center;font-size:13px;color:#6b7280">Don't have an account? <span style="color:#6d28d9;font-weight:600;cursor:pointer" onclick="showPage('reg',document.querySelectorAll('.tab-btn')[0])">Register here</span></p>
+</div>
+</div>
+
+<script>
+function genTok(n){const a=new Uint8Array(n);crypto.getRandomValues(a);return Array.from(a,b=>b.toString(16).padStart(2,'0')).join('')}
+document.getElementById('csrf_reg').value=genTok(32);
+document.getElementById('ts_reg').value=Date.now();
+document.getElementById('csrf_login').value=genTok(32);
+
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function togglePw(id){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password'}
+
+document.getElementById('regPw').addEventListener('input',function(){
+  const pw=this.value,lvls=[
+    {w:'0%',bg:'#e5e7eb',l:'Not entered'},
+    {w:'20%',bg:'#ef4444',l:'Very weak'},
+    {w:'40%',bg:'#f97316',l:'Weak'},
+    {w:'60%',bg:'#eab308',l:'Fair'},
+    {w:'80%',bg:'#22c55e',l:'Strong'},
+    {w:'100%',bg:'#16a34a',l:'Very strong 💪'}
+  ];
+  let s=0;
+  if(pw.length>=8)s++;if(/[A-Z]/.test(pw))s++;if(/[a-z]/.test(pw))s++;
+  if(/[0-9]/.test(pw))s++;if(/[^A-Za-z0-9]/.test(pw))s++;
+  const l=lvls[s];
+  document.getElementById('sfill').style.width=l.w;
+  document.getElementById('sfill').style.background=l.bg;
+  document.getElementById('stxt').textContent='Strength: '+l.l;
+});
+
+function setErr(id,show){
+  const e=document.getElementById('e-'+id);if(e)e.classList.toggle('show',show);
+  const i=document.getElementById(id);if(i)i.classList.toggle('err',show);
+}
+
+let rAttempts=0,rLast=0;
+document.getElementById('regForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const now=Date.now();
+  if(now-rLast<3000){alert('⚠️ Please wait before trying again.');return;}
+  rLast=now;rAttempts++;
+  if(rAttempts>5){alert('🔒 Too many attempts. Please refresh.');return;}
+  let ok=true;
+  const nm=document.getElementById('fullName').value.trim();
+  if(!nm||nm.length<3){setErr('fullName',true);ok=false;}else setErr('fullName',false);
+  const hn=document.getElementById('houseNo').value.trim();
+  if(!hn){setErr('houseNo',true);ok=false;}else setErr('houseNo',false);
+  const rn=document.getElementById('roadNo').value.trim();
+  if(!rn){setErr('roadNo',true);ok=false;}else setErr('roadNo',false);
+  const ps=document.getElementById('policeStation').value.trim();
+  if(!ps){setErr('policeStation',true);ok=false;}else setErr('policeStation',false);
+  const dt=document.getElementById('district').value.trim();
+  if(!dt){setErr('district',true);ok=false;}else setErr('district',false);
+  const em=document.getElementById('regEmail').value.trim();
+  if(!/^[^\s@]+@gmail\.com$/i.test(em)){setErr('regEmail',true);ok=false;}else setErr('regEmail',false);
+  const pw=document.getElementById('regPw').value;
+  if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(pw)){setErr('regPw',true);ok=false;}else setErr('regPw',false);
+  const cp=document.getElementById('regCPw').value;
+  if(pw!==cp||!cp){setErr('regCPw',true);ok=false;}else setErr('regCPw',false);
+  const tc=document.getElementById('agreeTerms').checked;
+  const te=document.getElementById('e-terms');
+  if(!tc){te.classList.add('show');ok=false;}else te.classList.remove('show');
+  if(!ok)return;
+  const btn=document.getElementById('regBtn');
+  btn.disabled=true;btn.textContent='⏳ Processing...';
+  setTimeout(()=>{document.getElementById('regForm').style.display='none';document.getElementById('regSuccess').style.display='block';},1500);
+});
+
+let lAttempts=0,lLast=0;
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const now=Date.now();
+  if(now-lLast<3000){alert('⚠️ Please wait.');return;}
+  lLast=now;lAttempts++;
+  if(lAttempts>5){alert('🔒 Too many failed attempts.');return;}
+  let ok=true;
+  const em=document.getElementById('loginEmail').value.trim();
+  if(!/^[^\s@]+@gmail\.com$/i.test(em)){setErr('loginEmail',true);ok=false;}else setErr('loginEmail',false);
+  const pw=document.getElementById('loginPw').value;
+  if(!pw){setErr('loginPw',true);ok=false;}else setErr('loginPw',false);
+  if(!ok)return;
+  const btn=document.getElementById('loginBtn');
+  btn.disabled=true;btn.textContent='⏳ Verifying...';
+  setTimeout(()=>{document.getElementById('loginForm').style.display='none';document.getElementById('loginSuccess').style.display='block';},1500);
+});
+
+function toggleReset(){
+  const b=document.getElementById('resetBox');
+  b.style.display=b.style.display==='block'?'none':'block';
+}
+
+function sendReset(){
+  const em=document.getElementById('resetEmail').value.trim();
+  const ee=document.getElementById('e-resetEmail');
+  if(!/^[^\s@]+@gmail\.com$/i.test(em)){ee.classList.add('show');return;}
+  ee.classList.remove('show');
+  document.getElementById('resetSuccess').style.display='block';
+}
+</script>

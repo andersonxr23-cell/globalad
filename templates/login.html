@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Login Form</title>
+    <!-- Font Awesome CDN for the eye icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #4f46e5;
+        }
+
+        /* Password toggle icon styling */
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 42px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .toggle-password:hover {
+            color: #4f46e5;
+        }
+
+        .extra-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .extra-actions a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .extra-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4f46e5;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="#">
+            <!-- Username/Email Input -->
+            <div class="input-group">
+                <label for="username">Email or Username</label>
+                <input type="text" id="username" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Password Input with Hide/Show -->
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <!-- Eye icon to toggle visibility -->
+                <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword"></i>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="extra-actions">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#" onclick="forgotPasswordAlert()">Forgot Password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="login-btn">Log In</button>
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+
+        // Logic to Hide and Show password
+        togglePassword.addEventListener('click', function () {
+            // Check and toggle the input type
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle eye icons
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Forgot password prompt demo
+        function forgotPasswordAlert() {
+            let userEmail = prompt("Please enter your registered email to reset password:");
+            if (userEmail) {
+                alert("A password reset link has been sent to " + userEmail + ". Thank you!");
+            }
+        }
+    </script>
+
+</body>
+</html>
