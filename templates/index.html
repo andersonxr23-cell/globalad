@@ -1,10 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>adcreator pro— Full Workflow</title>
+<title>Global Ad — Full Workflow</title>
+<meta name="description" content="Global Ad — create, target, and launch ads to 195 countries, track clicks live on a world map, and calculate revenue by region."/>
+<meta name="keywords" content="global ad, ad creator, click tracker, ad campaign, worldwide advertising, ad revenue calculator"/>
+<meta name="author" content="Global Ad"/>
+<meta name="robots" content="index, follow"/>
+<meta name="theme-color" content="#0b0f1a"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Global Ad — Create, Track &amp; Calculate Worldwide Ad Campaigns"/>
+<meta property="og:description" content="Launch ads to 195 countries, watch clicks roll in live, and calculate revenue by region — all in one workflow."/>
+<meta property="og:site_name" content="Global Ad"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Global Ad — Full Workflow"/>
+<meta name="twitter:description" content="Create, target, and launch ads to 195 countries with live click tracking and revenue calculation."/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
@@ -49,15 +60,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-.layout{display:grid;grid-template-columns:1fr 340px;min-height:calc(100vh - 64px)}
+.layout{display:grid;grid-template-columns:1fr;min-height:calc(100vh - 64px)}
 .left{padding:1.5rem 2rem;border-right:1px solid var(--border);overflow-y:auto}
-.right{padding:1.5rem;background:var(--surface);overflow-y:auto}
+.right{display:none}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;margin-bottom:1rem}
 .card-title{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:1rem}
 .ci{width:26px;height:26px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
 .lbl{display:block;font-size:.74rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;margin-top:10px}
 .lbl:first-child{margin-top:0}
-input[type=text],input[type=url],input[type=number],textarea,select{
+input[type=text],input[type=url],input[type=number],input[type=file],textarea,select{
   width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
   padding:8px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:.86rem;
   outline:none;transition:border-color .2s}
@@ -85,6 +96,8 @@ textarea{resize:vertical;min-height:80px}
 
 /* ── VIDEO AD PREVIEW SECTION ── */
 .ivp{border:2px solid var(--accent);border-radius:14px;overflow:hidden;margin-bottom:1rem;background:linear-gradient(135deg,rgba(79,110,247,.05),rgba(124,58,237,.04))}
+.ivp.flash{animation:ivpFlash 1.5s ease}
+@keyframes ivpFlash{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}40%{box-shadow:0 0 0 10px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
 .ivp-hdr{background:linear-gradient(90deg,rgba(79,110,247,.2),rgba(124,58,237,.12));padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
 .ivp-live{display:flex;align-items:center;gap:7px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
@@ -93,35 +106,59 @@ textarea{resize:vertical;min-height:80px}
 .ivp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 
 /* Video area styles */
-.video-zone{position:relative;background:#0a0d18;min-height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.video-zone{position:relative;background:#0a0d18;min-height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;overflow:hidden;
+  background-image:linear-gradient(120deg,rgba(79,110,247,.10),rgba(124,58,237,.08),rgba(79,110,247,.10));
+  background-size:220% 220%;transition:background-image .4s ease;}
+.video-zone.is-live{background-image:linear-gradient(120deg,rgba(79,110,247,.22),rgba(124,58,237,.18),rgba(79,110,247,.22));animation:liveSweep 5s ease-in-out infinite;}
 .video-zone video{width:100%;max-height:280px;display:block;object-fit:contain;background:#000}
 .video-zone iframe{width:100%;height:200px;border:none;display:block}
-.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:2rem;text-align:center;min-height:160px;width:100%}
-.video-placeholder .vp-icon{font-size:2.5rem;opacity:.4}
+@keyframes liveSweep{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:2rem;text-align:center;min-height:160px;width:100%;position:relative;z-index:1}
+.video-placeholder .vp-icon{font-size:2.5rem;opacity:.4;transition:all .4s ease}
+.video-zone.is-live .vp-icon{opacity:.85;animation:vpPulse 1.6s ease-in-out infinite}
+@keyframes vpPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
 .video-placeholder .vp-txt{font-size:.8rem;color:var(--muted);line-height:1.5}
-.video-placeholder .vp-badge{font-size:.65rem;background:rgba(79,110,247,.15);color:var(--accent);border:1px solid rgba(79,110,247,.3);border-radius:20px;padding:3px 10px}
+.video-placeholder .vp-badge{font-size:.65rem;background:rgba(123,130,160,.15);color:var(--muted);border:1px solid rgba(123,130,160,.3);border-radius:20px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px;transition:all .4s ease}
+.video-zone.is-live .vp-badge{background:rgba(239,68,68,.15);color:#ff6b6b;border:1px solid rgba(239,68,68,.35)}
+.vp-live-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.video-zone.is-live .vp-live-dot{background:#ef4444;animation:pulse 1.4s infinite}
+.vp-bars{display:flex;align-items:flex-end;gap:3px;height:22px;position:relative;z-index:1;opacity:.25}
+.vp-bars span{display:block;width:4px;height:6px;background:var(--accent);border-radius:2px}
+.video-zone.is-live .vp-bars{opacity:1}
+.video-zone.is-live .vp-bars span{animation:vpBar 1s ease-in-out infinite}
+.video-zone.is-live .vp-bars span:nth-child(1){animation-delay:0s}
+.video-zone.is-live .vp-bars span:nth-child(2){animation-delay:.15s}
+.video-zone.is-live .vp-bars span:nth-child(3){animation-delay:.3s}
+.video-zone.is-live .vp-bars span:nth-child(4){animation-delay:.45s}
+.video-zone.is-live .vp-bars span:nth-child(5){animation-delay:.6s}
+@keyframes vpBar{0%,100%{height:6px}50%{height:22px}}
+.ivp-public-note{font-size:.68rem;color:var(--muted);text-align:center;padding:6px 12px 0}
+.ivp-public-note.on{color:var(--green);font-weight:600}
 
 /* Video upload & link controls */
-.vid-controls{border-top:1px solid var(--border);background:rgba(10,13,24,.6);padding:.75rem 1rem}
-.vid-tabs{display:flex;gap:4px;margin-bottom:.6rem}
-.vid-tab{padding:4px 12px;border-radius:20px;font-size:.7rem;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:'Inter',sans-serif;font-weight:500}
-.vid-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.vid-input-area{display:none}
-.vid-input-area.active{display:block}
-.vid-upload-box{border:1.5px dashed var(--border);border-radius:8px;padding:.8rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.vid-upload-box:hover{border-color:var(--accent);background:rgba(79,110,247,.05)}
-.vid-upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.vid-upload-box .ubtxt{font-size:.74rem;color:var(--muted);pointer-events:none}
-.vid-upload-box .ubtxt strong{color:var(--accent)}
-.vid-url-row{display:flex;gap:6px}
-.vid-url-row input{flex:1;font-size:.76rem;padding:7px 10px}
-.vid-url-row button{padding:7px 14px;font-size:.74rem;border-radius:7px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;white-space:nowrap;transition:opacity .2s}
-.vid-url-row button:hover{opacity:.85}
-.vid-clear-btn{margin-top:6px;font-size:.7rem;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;padding:2px 0;transition:color .2s;display:none}
-.vid-clear-btn:hover{color:var(--red)}
-.vid-clear-btn.show{display:inline-block}
-.vid-hint{font-size:.67rem;color:var(--muted);margin-top:5px;line-height:1.4}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .vid-sponsored{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:2px 7px;font-size:.62rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;z-index:2}
+.mute-toggle{display:none;position:absolute;left:8px;bottom:8px;z-index:3;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.65);backdrop-filter:blur(6px);color:#fff;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;transition:background .2s}
+.mute-toggle:hover{background:rgba(0,0,0,.85)}
+.mute-toggle.show{display:flex}
 
 .ivp-body{padding:1rem}
 .ivp-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:4px;line-height:1.3}
@@ -324,7 +361,7 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
 <body>
 
 <nav class="step-nav">
-  <div class="brand">📢 AdCreator Pro</div>
+  <div class="brand">🌐 Global Ad</div>
   <div class="steps">
     <div class="step-item">
       <button class="step-btn active" id="stepBtn1" onclick="goStep(1)">
@@ -358,6 +395,15 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
   <div class="fw"><input type="text" id="adTitle" maxlength="80" placeholder="Enter your ad title…" oninput="rp();cc(this,'tc')"><span class="cc" id="tc">0/80</span></div>
   <span class="lbl">Ad Link (URL)</span>
   <input type="url" id="adLink" placeholder="https://your-website.com" oninput="rp()">
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="ci">🎥</div> Ad Video (optional)</div>
+  <span class="lbl">Upload Video File</span>
+  <input type="file" id="adVideoFile" accept="video/*" onchange="handleVideoFile(event)">
+  <span class="lbl">— or paste a Video URL (.mp4 / YouTube / Vimeo)</span>
+  <input type="url" id="adVideoUrl" placeholder="https://... .mp4 or https://youtube.com/watch?v=..." oninput="handleVideoUrl()">
+  <div style="margin-top:8px;font-size:.72rem;color:var(--muted)">If left empty, a sample demo video plays automatically once the campaign is live, so you can preview how it looks.</div>
 </div>
 
 <div class="card">
@@ -472,47 +518,27 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
 <div class="ivp">
   <div class="ivp-hdr">
     <div class="ivp-live"><div class="dot"></div> Public Ad View — Live</div>
-    <span style="font-size:.68rem;color:var(--muted)">📹 Upload video or paste a link</span>
+    <span class="ivp-tag" id="ivpStatus">⏸ Preview — not launched yet</span>
   </div>
   <div class="ivp-inner">
     <div class="ivp-card">
 
-      <!-- VIDEO ZONE -->
+      <!-- VIDEO ZONE — starts playing the moment the campaign is launched -->
       <div class="video-zone" id="videoZone">
         <span class="vid-sponsored">SPONSORED</span>
+        <video id="adVideoEl" muted loop playsinline controls style="display:none"></video>
+        <iframe id="adVideoFrame" style="display:none" allow="autoplay; encrypted-media" allowfullscreen title="Ad video"></iframe>
+        <button type="button" class="mute-toggle" id="muteToggleBtn" onclick="toggleMute()">🔇 Unmute</button>
         <div class="video-placeholder" id="vidPlaceholder">
-          <div class="vp-icon">🎬</div>
-          <div class="vp-txt">Your ad video will appear here<br>Upload a file or paste a YouTube / video link below</div>
-          <span class="vp-badge">No video yet</span>
+          <div class="vp-icon">📺</div>
+          <div class="vp-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="vp-txt" id="vpTxt">Ad preview — click "Launch Ad Campaign" to go live<br>so everyone with the link can watch it</div>
+          <span class="vp-badge" id="vpBadge"><span class="vp-live-dot"></span> Not Live Yet</span>
         </div>
       </div>
+      <div class="ivp-public-note" id="ivpPublicNote">👁️ Once launched, this ad plays automatically for every visitor — no click required</div>
 
-      <!-- VIDEO CONTROLS -->
-      <div class="vid-controls">
-        <div class="vid-tabs">
-          <button class="vid-tab on" onclick="setVidTab('upload',this)">📁 Upload File</button>
-          <button class="vid-tab" onclick="setVidTab('link',this)">🔗 Paste Link</button>
-        </div>
 
-        <div class="vid-input-area active" id="vidUploadArea">
-          <div class="vid-upload-box" id="vidDropBox">
-            <input type="file" id="vidFileInput" accept="video/*" onchange="handleVideoFile(this)">
-            <div class="ubtxt">🎬 <strong>Click to choose</strong> or drag &amp; drop a video<br>
-            <span style="font-size:.64rem">MP4, WebM, MOV, AVI — max display size 50 MB</span></div>
-          </div>
-        </div>
-
-        <div class="vid-input-area" id="vidLinkArea">
-          <div class="vid-url-row">
-            <input type="text" id="vidUrlInput" placeholder="YouTube, Vimeo, or direct video URL…" oninput="vidUrlPreview()">
-            <button onclick="loadVidLink()">Load</button>
-          </div>
-          <div class="vid-hint">Supports: YouTube • Vimeo • Direct .mp4/.webm links</div>
-        </div>
-
-        <button class="vid-clear-btn" id="vidClearBtn" onclick="clearVideo()">✕ Remove video</button>
-      </div>
-      <!-- END VIDEO CONTROLS -->
 
       <div class="ivp-body">
         <div class="ivp-title" id="iv-t">Your Ad Title</div>
@@ -574,7 +600,7 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
     <div class="tsw on" id="vtsw"></div>
   </div>
   <div class="lr" id="lrow">
-    <input type="text" id="vlink" value="https://adcreator.pro/view/AD-000001" readonly style="color:var(--accent);font-size:.75rem;cursor:default">
+    <input type="text" id="vlink" value="https://globalad.io/view/AD-000001" readonly style="color:var(--accent);font-size:.75rem;cursor:default">
     <button class="btn" onclick="cpL()">Copy</button>
   </div>
 </div>
@@ -768,7 +794,7 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
       <div class="lc-icon">🚀</div>
       <div class="lc-title">Launch Your Ad Campaign</div>
       <div class="lc-sub">Review your targeting, duration, and revenue estimates above,<br>then launch to start receiving clicks from your selected countries.</div>
-      <button class="subbtn" onclick="submitAd()">🚀 Launch Ad Campaign → Go to Click Tracker</button>
+      <button class="subbtn" onclick="submitAd()">🚀 Launch Ad Campaign</button>
     </div>
   </div>
 
@@ -783,7 +809,7 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
     <div style="font-size:.82rem;color:var(--muted);line-height:1.6">Targeting <strong id="mc">0</strong> countries across <strong id="mcn">0</strong> continents for <strong id="md">1 day</strong> with HIGH Security.</div>
     <div style="display:flex;gap:8px;margin-top:1.3rem;justify-content:center">
       <button class="btn" onclick="closeM()">✕ Close</button>
-      <button class="btn a" onclick="closeM();goStep(2)">📊 Go to Click Tracker →</button>
+      <button class="btn a" onclick="closeM();goStep(2)">📊 Click Tracker</button>
     </div>
   </div>
 </div>
@@ -793,6 +819,7 @@ svg#worldmap{width:100%;display:block;border-radius:8px}
 <script>
 /* ─── STEP NAVIGATION ─── */
 let currentStep=1;
+let stepsCompleted={};
 function goStep(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page'+n).classList.add('active');
@@ -813,62 +840,122 @@ function isUrl(s){try{var u=new URL(s);return u.protocol==='http:'||u.protocol==
 function san(s){if(typeof s!=='string')return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 
 /* ─── VIDEO HANDLING ─── */
-let videoLoaded=false;
-function setVidTab(type,btn){
-  document.querySelectorAll('.vid-tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('vidUploadArea').classList.toggle('active',type==='upload');
-  document.getElementById('vidLinkArea').classList.toggle('active',type==='link');
+let adVideoSrc=null;        // direct video src: uploaded file (blob:) or a direct .mp4/.webm URL
+let adVideoEmbedInfo=null;  // {platform:'youtube'|'vimeo', id} for embeds
+let adIsMuted=true;         // current mute state of the live ad video
+const DEFAULT_VIDEO_SRC='https://www.w3schools.com/html/mov_bbb.mp4'; // sample fallback so a video always plays once live
+
+function zoneIsLive(){const z=document.getElementById('videoZone');return !!(z&&z.classList.contains('is-live'));}
+
+function handleVideoFile(evt){
+  const f=evt.target.files&&evt.target.files[0];
+  if(!f)return;
+  if(adVideoSrc&&adVideoSrc.startsWith('blob:')){try{URL.revokeObjectURL(adVideoSrc);}catch(e){}}
+  adVideoSrc=URL.createObjectURL(f);
+  adVideoEmbedInfo=null;
+  const urlInput=document.getElementById('adVideoUrl');
+  if(urlInput)urlInput.value='';
+  if(zoneIsLive())renderVideo();
 }
-function handleVideoFile(input){
-  const file=input.files[0];
-  if(!file)return;
-  const url=URL.createObjectURL(file);
-  showVideoEl(url,'file',file.name);
-}
-function loadVidLink(){
-  const raw=document.getElementById('vidUrlInput').value.trim();
-  if(!raw){alert('Please enter a video URL.');return;}
-  const embed=parseVideoUrl(raw);
-  if(embed){showVideoEl(embed,'embed','');}
-  else{showVideoEl(raw,'direct','');}
-}
-function vidUrlPreview(){}
-function parseVideoUrl(url){
-  // YouTube
-  let m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-  if(m)return'https://www.youtube.com/embed/'+m[1]+'?autoplay=1&rel=0';
-  // Vimeo
-  m=url.match(/vimeo\.com\/(\d+)/);
-  if(m)return'https://player.vimeo.com/video/'+m[1]+'?autoplay=1';
+
+function parseEmbedInfo(raw){
+  try{
+    const u=new URL(raw);
+    const host=u.hostname.replace(/^www\./,'');
+    if(host==='youtube.com'||host==='m.youtube.com'){
+      const id=u.searchParams.get('v');
+      if(id)return{platform:'youtube',id};
+    }
+    if(host==='youtu.be'){
+      const id=u.pathname.slice(1);
+      if(id)return{platform:'youtube',id};
+    }
+    if(host==='vimeo.com'){
+      const id=u.pathname.split('/').filter(Boolean)[0];
+      if(id)return{platform:'vimeo',id};
+    }
+  }catch(e){/* not a valid URL yet, ignore */}
   return null;
 }
-function showVideoEl(src,type,name){
-  const zone=document.getElementById('videoZone');
-  // remove old media
-  zone.querySelectorAll('video,iframe').forEach(e=>e.remove());
-  document.getElementById('vidPlaceholder').style.display='none';
-  if(type==='embed'){
-    const ifr=document.createElement('iframe');
-    ifr.src=src;ifr.allowFullscreen=true;
-    ifr.allow='autoplay; encrypted-media; fullscreen';
-    zone.appendChild(ifr);
-  }else{
-    const vid=document.createElement('video');
-    vid.src=src;vid.controls=true;vid.autoplay=false;
-    zone.appendChild(vid);
-  }
-  videoLoaded=true;
-  document.getElementById('vidClearBtn').classList.add('show');
+
+function buildEmbedSrc(info,muted){
+  if(info.platform==='youtube')return `https://www.youtube.com/embed/${info.id}?autoplay=1&mute=${muted?1:0}&loop=1&playlist=${info.id}`;
+  if(info.platform==='vimeo')return `https://player.vimeo.com/video/${info.id}?autoplay=1&muted=${muted?1:0}&loop=1`;
+  return '';
 }
-function clearVideo(){
-  const zone=document.getElementById('videoZone');
-  zone.querySelectorAll('video,iframe').forEach(e=>e.remove());
-  document.getElementById('vidPlaceholder').style.display='flex';
-  document.getElementById('vidFileInput').value='';
-  document.getElementById('vidUrlInput').value='';
-  document.getElementById('vidClearBtn').classList.remove('show');
-  videoLoaded=false;
+
+function handleVideoUrl(){
+  const val=document.getElementById('adVideoUrl').value.trim();
+  if(!val){adVideoSrc=null;adVideoEmbedInfo=null;if(zoneIsLive())renderVideo();return;}
+  if(!isUrl(val))return;
+  const embed=parseEmbedInfo(val);
+  if(embed){adVideoEmbedInfo=embed;adVideoSrc=null;}
+  else{adVideoSrc=val;adVideoEmbedInfo=null;}
+  const fileInput=document.getElementById('adVideoFile');
+  if(fileInput)fileInput.value='';
+  if(zoneIsLive())renderVideo();
+}
+
+function updateMuteBtn(){
+  const btn=document.getElementById('muteToggleBtn');
+  if(!btn)return;
+  btn.innerHTML=adIsMuted?'🔇 Unmute':'🔊 Mute';
+}
+
+function renderVideo(){
+  const ph=document.getElementById('vidPlaceholder');
+  const vid=document.getElementById('adVideoEl');
+  const frame=document.getElementById('adVideoFrame');
+  const btn=document.getElementById('muteToggleBtn');
+  if(!ph||!vid||!frame)return;
+  if(adVideoEmbedInfo){
+    adIsMuted=false; // this runs from a user click/action, so try with sound on
+    frame.src=buildEmbedSrc(adVideoEmbedInfo,false);
+    frame.style.display='block';
+    vid.pause();vid.removeAttribute('src');vid.style.display='none';
+    ph.style.display='none';
+  }else{
+    vid.muted=false; // try sound on first — this call happens inside the user's click, so it's allowed
+    vid.src=adVideoSrc||DEFAULT_VIDEO_SRC;
+    vid.style.display='block';
+    vid.play().then(()=>{adIsMuted=false;updateMuteBtn();}).catch(()=>{
+      // browser blocked unmuted autoplay this time — fall back to muted so it still plays, user can tap Unmute
+      vid.muted=true;adIsMuted=true;updateMuteBtn();
+      vid.play().catch(()=>{});
+    });
+    frame.style.display='none';frame.src='';
+    ph.style.display='none';
+  }
+  if(btn){btn.classList.add('show');updateMuteBtn();}
+}
+
+function toggleMute(){
+  const vid=document.getElementById('adVideoEl');
+  const frame=document.getElementById('adVideoFrame');
+  if(adVideoEmbedInfo&&frame&&frame.style.display!=='none'){
+    adIsMuted=!adIsMuted;
+    frame.src=buildEmbedSrc(adVideoEmbedInfo,adIsMuted); // reloads the embed with the new mute state
+    updateMuteBtn();
+    return;
+  }
+  if(vid&&vid.style.display!=='none'){
+    const wantUnmuted=adIsMuted; // currently muted, so this click wants sound on
+    vid.muted=!wantUnmuted;
+    vid.play().then(()=>{adIsMuted=!wantUnmuted;updateMuteBtn();}).catch(()=>{
+      vid.muted=true;adIsMuted=true;updateMuteBtn(); // browser blocked unmuted play, stay muted
+    });
+  }
+}
+
+function showVideoPlaceholder(){
+  const ph=document.getElementById('vidPlaceholder');
+  const vid=document.getElementById('adVideoEl');
+  const frame=document.getElementById('adVideoFrame');
+  const btn=document.getElementById('muteToggleBtn');
+  if(ph)ph.style.display='flex';
+  if(vid){vid.pause();vid.removeAttribute('src');vid.style.display='none';}
+  if(frame){frame.style.display='none';frame.src='';}
+  if(btn)btn.classList.remove('show');
 }
 
 /* ─── COUNTRY DATA ─── */
@@ -975,7 +1062,7 @@ const C=[
   {n:'Tuvalu',f:'🇹🇻',con:'oceania',k:'oceania'},{n:'Nauru',f:'🇳🇷',con:'oceania',k:'oceania'}
 ];
 
-const P={us:['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],ca:['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland & Labrador','Northwest Territories','Nova Scotia','Nunavut','Ontario','Prince Edward Island','Quebec','Saskatchewan','Yukon'],mx:['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','Durango','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico City','Michoacan','Morelos','Nayarit','Nuevo Leon','Oaxaca','Puebla','Queretaro','Quintana Roo','San Luis Potosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan','Zacatecas'],de:['Baden-Wurttemberg','Bavaria','Berlin','Brandenburg','Bremen','Hamburg','Hesse','Lower Saxony','Mecklenburg-Vorpommern','North Rhine-Westphalia','Rhineland-Palatinate','Saarland','Saxony','Saxony-Anhalt','Schleswig-Holstein','Thuringia'],fr:['Auvergne-Rhone-Alpes','Bourgogne-Franche-Comte','Brittany','Centre-Val de Loire','Corsica','Grand Est','Hauts-de-France','Ile-de-France','Normandy','Nouvelle-Aquitaine','Occitanie','Pays de la Loire','Provence-Alpes-Cote d Azur'],it:['Abruzzo','Aosta Valley','Apulia','Basilicata','Calabria','Campania','Emilia-Romagna','Friuli-Venezia Giulia','Lazio','Liguria','Lombardy','Marche','Molise','Piedmont','Sardinia','Sicily','Trentino-South Tyrol','Tuscany','Umbria','Veneto'],uk:['East Midlands','East of England','London','North East','North West','Northern Ireland','Scotland','South East','South West','Wales','West Midlands','Yorkshire'],gt:['Alta Verapaz','Baja Verapaz','Chimaltenango','Chiquimula','El Progreso','Escuintla','Guatemala','Huehuetenango','Izabal','Jalapa','Jutiapa','Peten','Quetzaltenango','Quiche','Retalhuleu','Sacatepequez','San Marcos','Santa Rosa','Solola','Suchitepequez','Totonicapan','Zacapa'],bz:['Belize','Cayo','Corozal','Orange Walk','Stann Creek','Toledo'],hn:['Atlantida','Choluteca','Colon','Comayagua','Copan','Cortes','El Paraiso','Francisco Morazan','Gracias a Dios','Intibuca','Islas de la Bahia','La Paz','Lempira','Ocotepeque','Olancho','Santa Barbara','Valle','Yoro'],sv:['Ahuachapan','Cabanas','Chalatenango','Cuscatlan','La Libertad','La Paz','La Union','Morazan','San Miguel','San Salvador','San Vicente','Santa Ana','Sonsonate','Usulutan'],ni:['Boaco','Carazo','Chinandega','Chontales','Esteli','Granada','Jinotega','Leon','Madriz','Managua','Masaya','Matagalpa','Nueva Segovia','Rio San Juan','Rivas','RAAN','RAAS'],cr:['Alajuela','Cartago','Guanacaste','Heredia','Limon','Puntarenas','San Jose'],pa:['Bocas del Toro','Chiriqui','Cocle','Colon','Darien','Herrera','Kuna Yala','Los Santos','Ngobe-Bugle','Panama'],cu:['Artemisa','Camaguey','Ciego de Avila','Cienfuegos','Granma','Guantanamo','Holguin','La Habana','Las Tunas','Matanzas','Mayabeque','Pinar del Rio','Sancti Spiritus','Santiago de Cuba','Villa Clara'],jm:['Clarendon','Hanover','Kingston','Manchester','Portland','Saint Andrew','Saint Ann','Saint Catherine','Saint Elizabeth','Saint James','Saint Mary','Saint Thomas','Trelawny','Westmoreland'],ht:['Artibonite','Centre','Grand Anse','Nippes','Nord','Nord-Est','Nord-Ouest','Ouest','Sud','Sud-Est'],do:['Azua','Bahoruco','Barahona','Dajabon','Distrito Nacional','Duarte','El Seibo','Elias Pina','Espaillat','Hato Mayor','Hermanas Mirabal','Independencia','La Altagracia','La Romana','La Vega','Maria Trinidad Sanchez','Monsenor Nouel','Monte Cristi','Monte Plata','Pedernales','Peravia','Puerto Plata','Samana','San Cristobal','San Jose de Ocoa','San Juan','San Pedro de Macoris','Sanchez Ramirez','Santiago','Santiago Rodriguez','Santo Domingo'],tt:['Arima','Chaguanas','Couva-Tabaquite-Talparo','Diego Martin','Mayaro-Rio Claro','Penal-Debe','Point Fortin','Port of Spain','Princes Town'],bs:['Acklins','Berry Islands','Bimini','Cat Island','Central Abaco','Central Andros','Central Eleuthera','City of Freeport','Crooked Island','East Grand Bahama','Exuma','Grand Cay','Harbour Island','Inagua','Long Island','Mangrove Cay','Mayaguana','North Abaco','North Andros','North Eleuthera','Ragged Island','Rum Cay','San Salvador','South Abaco','South Andros','South Eleuthera','Spanish Wells','West Grand Bahama'],bb:['Christ Church','Saint Andrew','Saint George','Saint James','Saint John','Saint Joseph','Saint Lucy','Saint Michael','Saint Peter','Saint Philip','Saint Thomas'],lc:['Anse-la-Raye','Canaries','Castries','Choiseul','Dennery','Gros Islet','Laborie','Micoud','Soufriere','Vieux Fort'],vc:['Charlotte','Grenadines','Saint Andrew','Saint David','Saint George','Saint Patrick'],gd:['Carriacou & Petite Martinique','Saint Andrew','Saint David','Saint George','Saint John','Saint Mark','Saint Patrick'],ag:['Barbuda','Redonda','Saint George','Saint John','Saint Mary','Saint Paul','Saint Peter','Saint Philip'],dm:['Saint Andrew','Saint David','Saint George','Saint John','Saint Joseph','Saint Luke','Saint Mark','Saint Patrick','Saint Paul','Saint Peter'],kn:['Christ Church Nichola Town','Saint Anne Sandy Point','Saint George Basseterre','Saint George Gingerland','Saint James Windward','Saint John Capisterre','Saint John Figtree','Saint Mary Cayon','Saint Paul Capisterre','Saint Paul Charlestown','Saint Peter Basseterre','Saint Thomas Lowland','Saint Thomas Middle Island','Trinity Palmetto Point'],nl:['Drenthe','Flevoland','Friesland','Gelderland','Groningen','Limburg','North Brabant','North Holland','Overijssel','South Holland','Utrecht','Zeeland'],be:['Antwerp','East Flanders','Flemish Brabant','Hainaut','Liege','Limburg','Luxembourg','Namur','Walloon Brabant','West Flanders'],at:['Burgenland','Carinthia','Lower Austria','Salzburg','Styria','Tirol','Upper Austria','Vienna','Vorarlberg'],ch:['Aargau','Appenzell Ausserrhoden','Appenzell Innerrhoden','Basel-Landschaft','Basel-Stadt','Bern','Fribourg','Geneva','Glarus','Graubunden','Jura','Lucerne','Neuchatel','Nidwalden','Obwalden','Schaffhausen','Schwyz','Solothurn','St. Gallen','Thurgau','Ticino','Uri','Valais','Vaud','Zug','Zurich'],pt:['Aveiro','Beja','Braga','Braganca','Castelo Branco','Coimbra','Evora','Faro','Guarda','Leiria','Lisbon','Portalegre','Porto','Santarem','Setubal','Viana do Castelo','Vila Real','Viseu'],ie:['Carlow','Cavan','Clare','Cork','Donegal','Dublin','Galway','Kerry','Kildare','Kilkenny','Laois','Leitrim','Limerick','Longford','Louth','Mayo','Meath','Monaghan','Offaly','Roscommon','Sligo','Tipperary','Waterford','Westmeath','Wexford','Wicklow'],lu:['Diekirch','Grevenmacher','Luxembourg'],se:['Blekinge','Dalarna','Gavleborg','Gotland','Halland','Jamtland','Jonkoping','Kalmar','Kronoberg','Norrbotten','Orebro','Ostergotland','Skane','Sodermanland','Stockholm','Uppsala','Varmland','Vasterbotten','Vasternorrland','Vastmanland','Vastra Gotaland'],no:['Agder','Innlandet','More og Romsdal','Nordland','Oslo','Rogaland','Troms og Finnmark','Trondelag','Vestfold og Telemark','Vestland','Viken'],dk:['Capital','Central Jutland','North Jutland','Region Zealand','Southern Denmark'],fi:['Central Finland','Central Ostrobothnia','Kainuu','Kymenlaakso','Lapland','North Karelia','North Ostrobothnia','North Savo','Ostrobothnia','Pirkanmaa','Satakunta','South Karelia','South Ostrobothnia','South Savo','Southwest Finland','Uusimaa'],ee:['Harju','Hiiu','Ida-Viru','Jarva','Jogeva','Laane','Laane-Viru','Parnu','Polva','Rapla','Saare','Tartu','Valga','Viljandi','Voru'],lv:['Adazi','Aizkraukle','Aluksne','Balvi','Bauska','Cesis','Daugavpils','Dobele','Gulbene','Jekabpils','Jelgava','Jurmala','Kraslava','Kuldiga','Liepaja','Limbazi','Ludza','Madona','Ogre','Preili','Rezekne','Riga','Saldus','Sigulda','Smiltene','Talsi','Tukums','Valmiera','Ventspils'],lt:['Alytus','Kaunas','Klaipeda','Marijampole','Panevezys','Siauliai','Taurage','Telsiai','Utena','Vilnius'],is:['Capital','Northeastern','Northwestern','Southern','Southern Peninsula','Western','Westfjords','West Iceland'],pl:['Greater Poland','Kuyavian-Pomeranian','Lesser Poland','Lodz','Lower Silesian','Lublin','Lubusz','Masovian','Opole','Podlaskie','Pomeranian','Silesian','Subcarpathian','Swietokrzyskie','Warmian-Masurian','West Pomeranian'],ru:['Adygea','Altai Krai','Altai Republic','Amur Oblast','Arkhangelsk Oblast','Astrakhan Oblast','Bashkortostan','Belgorod Oblast','Bryansk Oblast','Buryatia','Chelyabinsk Oblast','Chechnya','Chukotka','Chuvashia','Dagestan','Ingushetia','Irkutsk Oblast','Ivanovo Oblast','Kabardino-Balkaria','Kaliningrad Oblast','Kalmykia','Kaluga Oblast','Kamchatka Krai','Karachay-Cherkessia','Karelia','Kemerovo Oblast','Khabarovsk Krai','Khakassia','Khanty-Mansiysk','Kirov Oblast','Komi','Kostroma Oblast','Krasnodar Krai','Krasnoyarsk Krai','Kursk Oblast','Leningrad Oblast','Lipetsk Oblast','Magadan Oblast','Mari El','Mordovia','Moscow','Moscow Oblast','Murmansk Oblast','Nenets','Nizhny Novgorod Oblast','North Ossetia','Novgorod Oblast','Novosibirsk Oblast','Omsk Oblast','Orenburg Oblast','Penza Oblast','Perm Krai','Primorsky Krai','Pskov Oblast','Rostov Oblast','Ryazan Oblast','Saint Petersburg','Sakha Republic','Sakhalin Oblast','Samara Oblast','Saratov Oblast','Smolensk Oblast','Stavropol Krai','Sverdlovsk Oblast','Tatarstan','Tomsk Oblast','Tula Oblast','Tuva','Tyumen Oblast','Udmurtia','Ulyanovsk Oblast','Vladimir Oblast','Volgograd Oblast','Vologda Oblast','Voronezh Oblast','Yamalo-Nenets','Yaroslavl Oblast','Zabaykalsky Krai'],ua:['Cherkasy','Chernihiv','Chernivtsi','Crimea','Dnipropetrovsk','Donetsk','Ivano-Frankivsk','Kharkiv','Kherson','Khmelnytskyi','Kyiv','Kirovohrad','Luhansk','Lviv','Mykolaiv','Odessa','Poltava','Rivne','Sumy','Ternopil','Vinnytsia','Volyn','Zakarpattia','Zaporizhzhia','Zhytomyr'],ro:['Alba','Arad','Arges','Bacau','Bihor','Bistrita-Nasaud','Botosani','Braila','Brasov','Bucharest','Buzau','Calarasi','Caras-Severin','Cluj','Constanta','Covasna','Dambovita','Dolj','Galati','Giurgiu','Gorj','Harghita','Hunedoara','Ialomita','Iasi','Ilfov','Maramures','Mehedinti','Mures','Neamt','Olt','Prahova','Salaj','Satu Mare','Sibiu','Suceava','Teleorman','Timis','Tulcea','Vaslui','Valcea','Vrancea'],hu:['Bacs-Kiskun','Baranya','Bekes','Borsod-Abauj-Zemplen','Budapest','Csongrad-Csanad','Fejer','Gyor-Moson-Sopron','Hajdu-Bihar','Heves','Jasz-Nagykun-Szolnok','Komarom-Esztergom','Nograd','Pest','Somogy','Szabolcs-Szatmar-Bereg','Tolna','Vas','Veszprem','Zala'],cz:['Central Bohemian','Hradec Kralove','Karlovy Vary','Liberec','Moravian-Silesian','Olomouc','Pardubice','Plzen','Prague','South Bohemian','South Moravian','Usti nad Labem','Vysocina','Zlin'],sk:['Banska Bystrica','Bratislava','Kosice','Nitra','Presov','Trencin','Trnava','Zilina'],bg:['Blagoevgrad','Burgas','Dobrich','Gabrovo','Haskovo','Kardzhali','Kyustendil','Lovech','Montana','Pazardzhik','Pernik','Pleven','Plovdiv','Razgrad','Ruse','Shumen','Silistra','Sliven','Smolyan','Sofia','Sofia City','Stara Zagora','Targovishte','Varna','Veliko Tarnovo','Vidin','Vratsa','Yambol'],by:['Brest','Gomel','Grodno','Minsk','Minsk City','Mogilev','Vitebsk'],md:['Anenii Noi','Balti','Basarabeasca','Briceni','Cahul','Cantemir','Calarasi','Causeni','Cimislia','Criuleni','Donduseni','Drochia','Edinet','Falesti','Floresti','Gagauzia','Glodeni','Hincesti','Ialoveni','Leova','Nisporeni','Ocnita','Orhei','Rezina','Riscani','Singerei','Soroca','Straseni','Taraclia','Telenesti','Transnistria','Ungheni'],gr:['Attica','Central Greece','Central Macedonia','Crete','Eastern Macedonia & Thrace','Epirus','Ionian Islands','North Aegean','Peloponnese','South Aegean','Thessaly','Western Greece','Western Macedonia'],hr:['Bjelovar-Bilogora','Brod-Posavina','Dubrovnik-Neretva','Istria','Karlovac','Koprivnica-Krizevci','Krapina-Zagorje','Lika-Senj','Medimurje','Osijek-Baranja','Pozega-Slavonia','Primorje-Gorski Kotar','Sibenik-Knin','Sisak-Moslavina','Split-Dalmatia','Varazdin','Virovitica-Podravina','Vukovar-Srijem','Zadar','Zagreb','Zagreb City'],rs:['Belgrade','Bor','Branicevo','Central Banat','Jablanica','Kolubara','Macva','Moravica','Nisava','North Backa','North Banat','Pcinja','Pirot','Podunavlje','Pomoravlje','Rasina','Raska','South Backa','South Banat','Srem','Sumadija','Toplica','West Backa','Zajecar','Zlatibor'],si:['Carinthia','Central Slovenia','Drava','Koroska','Littoral-Inner Carniola','Lower Sava','Savinja','Southeastern Slovenia','Upper Carniola','Upper Savinja','Western Slovenia'],ba:['Federation of Bosnia & Herzegovina','Republika Srpska','Brcko District'],al:['Berat','Diber','Durres','Elbasan','Fier','Gjirokaster','Korce','Kukes','Lezhe','Shkoder','Tirana','Vlore'],mk:['Northeastern','Pelagonia','Polog','Skopje','Southeastern','Southwestern','Vardar','Eastern'],me:['Andrijevica','Bar','Berane','Bijelo Polje','Budva','Cetinje','Danilovgrad','Gusinje','Herceg Novi','Kolasin','Kotor','Mojkovac','Niksic','Petnjica','Plav','Pljevlja','Podgorica','Rozaje','Tivat','Ulcinj','Zabljak'],rs2:['Ferizaj','Gjakova','Gjilan','Mitrovica','Peja','Pristina','Prizren']};
+const P={us:['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'],ca:['Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland & Labrador','Northwest Territories','Nova Scotia','Nunavut','Ontario','Prince Edward Island','Quebec','Saskatchewan','Yukon'],mx:['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','Durango','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico City','Michoacan','Morelos','Nayarit','Nuevo Leon','Oaxaca','Puebla','Queretaro','Quintana Roo','San Luis Potosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan','Zacatecas'],de:['Baden-Wurttemberg','Bavaria','Berlin','Brandenburg','Bremen','Hamburg','Hesse','Lower Saxony','Mecklenburg-Vorpommern','North Rhine-Westphalia','Rhineland-Palatinate','Saarland','Saxony','Saxony-Anhalt','Schleswig-Holstein','Thuringia'],fr:['Auvergne-Rhone-Alpes','Bourgogne-Franche-Comte','Brittany','Centre-Val de Loire','Corsica','Grand Est','Hauts-de-France','Ile-de-France','Normandy','Nouvelle-Aquitaine','Occitanie','Pays de la Loire','Provence-Alpes-Cote d Azur'],it:['Abruzzo','Aosta Valley','Apulia','Basilicata','Calabria','Campania','Emilia-Romagna','Friuli-Venezia Giulia','Lazio','Liguria','Lombardy','Marche','Molise','Piedmont','Sardinia','Sicily','Trentino-South Tyrol','Tuscany','Umbria','Veneto'],uk:['East Midlands','East of England','London','North East','North West','Northern Ireland','Scotland','South East','South West','Wales','West Midlands','Yorkshire'],gt:['Alta Verapaz','Baja Verapaz','Chimaltenango','Chiquimula','El Progreso','Escuintla','Guatemala','Huehuetenango','Izabal','Jalapa','Jutiapa','Peten','Quetzaltenango','Quiche','Retalhuleu','Sacatepequez','San Marcos','Santa Rosa','Solola','Suchitepequez','Totonicapan','Zacapa'],bz:['Belize','Cayo','Corozal','Orange Walk','Stann Creek','Toledo'],hn:['Atlantida','Choluteca','Colon','Comayagua','Copan','Cortes','El Paraiso','Francisco Morazan','Gracias a Dios','Intibuca','Islas de la Bahia','La Paz','Lempira','Ocotepeque','Olancho','Santa Barbara','Valle','Yoro'],sv:['Ahuachapan','Cabanas','Chalatenango','Cuscatlan','La Libertad','La Paz','La Union','Morazan','San Miguel','San Salvador','San Vicente','Santa Ana','Sonsonate','Usulutan'],ni:['Boaco','Carazo','Chinandega','Chontales','Esteli','Granada','Jinotega','Leon','Madriz','Managua','Masaya','Matagalpa','Nueva Segovia','Rio San Juan','Rivas','RAAN','RAAS'],cr:['Alajuela','Cartago','Guanacaste','Heredia','Limon','Puntarenas','San Jose'],pa:['Bocas del Toro','Chiriqui','Cocle','Colon','Darien','Herrera','Kuna Yala','Los Santos','Ngobe-Bugle','Panama'],cu:['Artemisa','Camaguey','Ciego de Avila','Cienfuegos','Granma','Guantanamo','Holguin','La Habana','Las Tunas','Matanzas','Mayabeque','Pinar del Rio','Sancti Spiritus','Santiago de Cuba','Villa Clara'],jm:['Clarendon','Hanover','Kingston','Manchester','Portland','Saint Andrew','Saint Ann','Saint Catherine','Saint Elizabeth','Saint James','Saint Mary','Saint Thomas','Trelawny','Westmoreland'],ht:['Artibonite','Centre','Grand Anse','Nippes','Nord','Nord-Est','Nord-Ouest','Ouest','Sud','Sud-Est'],do:['Azua','Bahoruco','Barahona','Dajabon','Distrito Nacional','Duarte','El Seibo','Elias Pina','Espaillat','Hato Mayor','Hermanas Mirabal','Independencia','La Altagracia','La Romana','La Vega','Maria Trinidad Sanchez','Monsenor Nouel','Monte Cristi','Monte Plata','Pedernales','Peravia','Puerto Plata','Samana','San Cristobal','San Jose de Ocoa','San Juan','San Pedro de Macoris','Sanchez Ramirez','Santiago','Santiago Rodriguez','Santo Domingo'],tt:['Arima','Chaguanas','Couva-Tabaquite-Talparo','Diego Martin','Mayaro-Rio Claro','Penal-Debe','Point Fortin','Port of Spain','Princes Town'],bs:['Acklins','Berry Islands','Bimini','Cat Island','Central Abaco','Central Andros','Central Eleuthera','City of Freeport','Crooked Island','East Grand Bahama','Exuma','Grand Cay','Harbour Island','Inagua','Long Island','Mangrove Cay','Mayaguana','North Abaco','North Andros','North Eleuthera','Ragged Island','Rum Cay','San Salvador','South Abaco','South Andros','South Eleuthera','Spanish Wells','West Grand Bahama'],bb:['Christ Church','Saint Andrew','Saint George','Saint James','Saint John','Saint Joseph','Saint Lucy','Saint Michael','Saint Peter','Saint Philip','Saint Thomas'],lc:['Anse-la-Raye','Canaries','Castries','Choiseul','Dennery','Gros Islet','Laborie','Micoud','Soufriere','Vieux Fort'],vc:['Charlotte','Grenadines','Saint Andrew','Saint David','Saint George','Saint Patrick'],gd:['Carriacou & Petite Martinique','Saint Andrew','Saint David','Saint George','Saint John','Saint Mark','Saint Patrick'],ag:['Barbuda','Redonda','Saint George','Saint John','Saint Mary','Saint Paul','Saint Peter','Saint Philip'],dm:['Saint Andrew','Saint David','Saint George','Saint John','Saint Joseph','Saint Luke','Saint Mark','Saint Patrick','Saint Paul','Saint Peter'],kn:['Christ Church Nichola Town','Saint Anne Sandy Point','Saint George Basseterre','Saint George Gingerland','Saint James Windward','Saint John Capisterre','Saint John Figtree','Saint Mary Cayon','Saint Paul Capisterre','Saint Paul Charlestown','Saint Peter Basseterre','Saint Thomas Lowland','Saint Thomas Middle Island','Trinity Palmetto Point'],nl:['Drenthe','Flevoland','Friesland','Gelderland','Groningen','Limburg','North Brabant','North Holland','Overijssel','South Holland','Utrecht','Zeeland'],be:['Antwerp','East Flanders','Flemish Brabant','Hainaut','Liege','Limburg','Luxembourg','Namur','Walloon Brabant','West Flanders'],at:['Burgenland','Carinthia','Lower Austria','Salzburg','Styria','Tirol','Upper Austria','Vienna','Vorarlberg'],ch:['Aargau','Appenzell Ausserrhoden','Appenzell Innerrhoden','Basel-Landschaft','Basel-Stadt','Bern','Fribourg','Geneva','Glarus','Graubunden','Jura','Lucerne','Neuchatel','Nidwalden','Obwalden','Schaffhausen','Schwyz','Solothurn','St. Gallen','Thurgau','Ticino','Uri','Valais','Vaud','Zug','Zurich'],pt:['Aveiro','Beja','Braga','Braganca','Castelo Branco','Coimbra','Evora','Faro','Guarda','Leiria','Lisbon','Portalegre','Porto','Santarem','Setubal','Viana do Castelo','Vila Real','Viseu'],ie:['Carlow','Cavan','Clare','Cork','Donegal','Dublin','Galway','Kerry','Kildare','Kilkenny','Laois','Leitrim','Limerick','Longford','Louth','Mayo','Meath','Monaghan','Offaly','Roscommon','Sligo','Tipperary','Waterford','Westmeath','Wexford','Wicklow'],lu:['Diekirch','Grevenmacher','Luxembourg'],se:['Blekinge','Dalarna','Gavleborg','Gotland','Halland','Jamtland','Jonkoping','Kalmar','Kronoberg','Norrbotten','Orebro','Ostergotland','Skane','Sodermanland','Stockholm','Uppsala','Varmland','Vasterbotten','Vasternorrland','Vastmanland','Vastra Gotaland'],no:['Agder','Innlandet','More og Romsdal','Nordland','Oslo','Rogaland','Troms og Finnmark','Trondelag','Vestfold og Telemark','Vestland','Viken'],dk:['Capital','Central Jutland','North Jutland','Region Zealand','Southern Denmark'],fi:['Central Finland','Central Ostrobothnia','Kainuu','Kymenlaakso','Lapland','North Karelia','North Ostrobothnia','North Savo','Ostrobothnia','Pirkanmaa','Satakunta','South Karelia','South Ostrobothnia','South Savo','Southwest Finland','Uusimaa'],ee:['Harju','Hiiu','Ida-Viru','Jarva','Jogeva','Laane','Laane-Viru','Parnu','Polva','Rapla','Saare','Tartu','Valga','Voru'],lv:['Adazi','Aizkraukle','Aluksne','Balvi','Bauska','Cesis','Daugavpils','Dobele','Gulbene','Jekabpils','Jelgava','Jurmala','Kraslava','Kuldiga','Liepaja','Limbazi','Ludza','Madona','Ogre','Preili','Rezekne','Riga','Saldus','Sigulda','Smiltene','Talsi','Tukums','Valmiera','Ventspils'],lt:['Alytus','Kaunas','Klaipeda','Marijampole','Panevezys','Siauliai','Taurage','Telsiai','Utena','Vilnius'],is:['Capital','Northeastern','Northwestern','Southern','Southern Peninsula','Western','Westfjords','West Iceland'],pl:['Greater Poland','Kuyavian-Pomeranian','Lesser Poland','Lodz','Lower Silesian','Lublin','Lubusz','Masovian','Opole','Podlaskie','Pomeranian','Silesian','Subcarpathian','Swietokrzyskie','Warmian-Masurian','West Pomeranian'],ru:['Adygea','Altai Krai','Altai Republic','Amur Oblast','Arkhangelsk Oblast','Astrakhan Oblast','Bashkortostan','Belgorod Oblast','Bryansk Oblast','Buryatia','Chelyabinsk Oblast','Chechnya','Chukotka','Chuvashia','Dagestan','Ingushetia','Irkutsk Oblast','Ivanovo Oblast','Kabardino-Balkaria','Kaliningrad Oblast','Kalmykia','Kaluga Oblast','Kamchatka Krai','Karachay-Cherkessia','Karelia','Kemerovo Oblast','Khabarovsk Krai','Khakassia','Khanty-Mansiysk','Kirov Oblast','Komi','Kostroma Oblast','Krasnodar Krai','Krasnoyarsk Krai','Kursk Oblast','Leningrad Oblast','Lipetsk Oblast','Magadan Oblast','Mari El','Mordovia','Moscow','Moscow Oblast','Murmansk Oblast','Nenets','Nizhny Novgorod Oblast','North Ossetia','Novgorod Oblast','Novosibirsk Oblast','Omsk Oblast','Orenburg Oblast','Penza Oblast','Perm Krai','Primorsky Krai','Pskov Oblast','Rostov Oblast','Ryazan Oblast','Saint Petersburg','Sakha Republic','Sakhalin Oblast','Samara Oblast','Saratov Oblast','Smolensk Oblast','Stavropol Krai','Sverdlovsk Oblast','Tatarstan','Tomsk Oblast','Tula Oblast','Tuva','Tyumen Oblast','Udmurtia','Ulyanovsk Oblast','Vladimir Oblast','Volgograd Oblast','Vologda Oblast','Voronezh Oblast','Yamalo-Nenets','Yaroslavl Oblast','Zabaykalsky Krai'],ua:['Cherkasy','Chernihiv','Chernivtsi','Crimea','Dnipropetrovsk','Donetsk','Ivano-Frankivsk','Kharkiv','Kherson','Khmelnytskyi','Kyiv','Kirovohrad','Luhansk','Lviv','Mykolaiv','Odessa','Poltava','Rivne','Sumy','Ternopil','Vinnytsia','Volyn','Zakarpattia','Zaporizhzhia','Zhytomyr'],ro:['Alba','Arad','Arges','Bacau','Bihor','Bistrita-Nasaud','Botosani','Braila','Brasov','Bucharest','Buzau','Calarasi','Caras-Severin','Cluj','Constanta','Covasna','Dambovita','Dolj','Galati','Giurgiu','Gorj','Harghita','Hunedoara','Ialomita','Iasi','Ilfov','Maramures','Mehedinti','Mures','Neamt','Olt','Prahova','Salaj','Satu Mare','Sibiu','Suceava','Teleorman','Timis','Tulcea','Vaslui','Valcea','Vrancea'],hu:['Bacs-Kiskun','Baranya','Bekes','Borsod-Abauj-Zemplen','Budapest','Csongrad-Csanad','Fejer','Gyor-Moson-Sopron','Hajdu-Bihar','Heves','Jasz-Nagykun-Szolnok','Komarom-Esztergom','Nograd','Pest','Somogy','Szabolcs-Szatmar-Bereg','Tolna','Vas','Veszprem','Zala'],cz:['Central Bohemian','Hradec Kralove','Karlovy Vary','Liberec','Moravian-Silesian','Olomouc','Pardubice','Plzen','Prague','South Bohemian','South Moravian','Usti nad Labem','Vysocina','Zlin'],sk:['Banska Bystrica','Bratislava','Kosice','Nitra','Presov','Trencin','Trnava','Zilina'],bg:['Blagoevgrad','Burgas','Dobrich','Gabrovo','Haskovo','Kardzhali','Kyustendil','Lovech','Montana','Pazardzhik','Pernik','Pleven','Plovdiv','Razgrad','Ruse','Shumen','Silistra','Sliven','Smolyan','Sofia','Sofia City','Stara Zagora','Targovishte','Varna','Veliko Tarnovo','Vidin','Vratsa','Yambol'],by:['Brest','Gomel','Grodno','Minsk','Minsk City','Mogilev','Vitebsk'],md:['Anenii Noi','Balti','Basarabeasca','Briceni','Cahul','Cantemir','Calarasi','Causeni','Cimislia','Criuleni','Donduseni','Drochia','Edinet','Falesti','Floresti','Gagauzia','Glodeni','Hincesti','Ialoveni','Leova','Nisporeni','Ocnita','Orhei','Rezina','Riscani','Singerei','Soroca','Straseni','Taraclia','Telenesti','Transnistria','Ungheni'],gr:['Attica','Central Greece','Central Macedonia','Crete','Eastern Macedonia & Thrace','Epirus','Ionian Islands','North Aegean','Peloponnese','South Aegean','Thessaly','Western Greece','Western Macedonia'],hr:['Bjelovar-Bilogora','Brod-Posavina','Dubrovnik-Neretva','Istria','Karlovac','Koprivnica-Krizevci','Krapina-Zagorje','Lika-Senj','Medimurje','Osijek-Baranja','Pozega-Slavonia','Primorje-Gorski Kotar','Sibenik-Knin','Sisak-Moslavina','Split-Dalmatia','Varazdin','Virovitica-Podravina','Vukovar-Srijem','Zadar','Zagreb','Zagreb City'],rs:['Belgrade','Bor','Branicevo','Central Banat','Jablanica','Kolubara','Macva','Moravica','Nisava','North Backa','North Banat','Pcinja','Pirot','Podunavlje','Pomoravlje','Rasina','Raska','South Backa','South Banat','Srem','Sumadija','Toplica','West Backa','Zajecar','Zlatibor'],si:['Carinthia','Central Slovenia','Drava','Koroska','Littoral-Inner Carniola','Lower Sava','Savinja','Southeastern Slovenia','Upper Carniola','Upper Savinja','Western Slovenia'],ba:['Federation of Bosnia & Herzegovina','Republika Srpska','Brcko District'],al:['Berat','Diber','Durres','Elbasan','Fier','Gjirokaster','Korce','Kukes','Lezhe','Shkoder','Tirana','Vlore'],mk:['Northeastern','Pelagonia','Polog','Skopje','Southeastern','Southwestern','Vardar','Eastern'],me:['Andrijevica','Bar','Berane','Bijelo Polje','Budva','Cetinje','Danilovgrad','Gusinje','Herceg Novi','Kolasin','Kotor','Mojkovac','Niksic','Petnjica','Plav','Pljevlja','Podgorica','Rozaje','Tivat','Ulcinj','Zabljak'],rs2:['Ferizaj','Gjakova','Gjilan','Mitrovica','Peja','Pristina','Prizren']};
 
 let sel=new Set(),selP={},dur=1,secN=6,viewOn=true,flt='all',srch='';
 const DM={1:'1 Day',3:'3 Days',7:'1 Week',14:'2 Weeks',30:'1 Month',60:'2 Months',90:'3 Months'};
@@ -1018,12 +1105,31 @@ function submitAd(){
   const link=document.getElementById('adLink').value.trim();
   if(!title){alert('Please enter an Ad Title.');return;}
   if(!isUrl(link)){alert('Please enter a valid URL (https://...).');return;}
-  const conts=new Set(Array.from(sel).map(nm=>{const f=C.find(c=>c.n===nm);return f?f.k:null;}).filter(Boolean));
-  document.getElementById('mc').textContent=sel.size;
-  document.getElementById('mcn').textContent=conts.size;
-  document.getElementById('md').textContent=DM[dur]||(dur+' Days');
-  document.getElementById('modal1').classList.add('show');
+  goLive();
+  goStep(1);
+  setTimeout(()=>{
+    const box=document.querySelector('.ivp');
+    if(box){
+      box.scrollIntoView({behavior:'smooth',block:'center'});
+      box.classList.add('flash');
+      setTimeout(()=>box.classList.remove('flash'),1500);
+    }
+  },50);
   stepsCompleted&&(stepsCompleted[1]=true);
+}
+function goLive(){
+  const zone=document.getElementById('videoZone');
+  if(!zone)return;
+  zone.classList.add('is-live');
+  renderVideo();
+  const badge=document.getElementById('vpBadge');
+  if(badge)badge.innerHTML='<span class="vp-live-dot"></span> LIVE — Playing Now';
+  const txt=document.getElementById('vpTxt');
+  if(txt)txt.innerHTML="This ad is playing right now<br>— visible to everyone, no click needed";
+  const status=document.getElementById('ivpStatus');
+  if(status){status.textContent='🔴 Live — visible to everyone';status.style.color='var(--green)';}
+  const note=document.getElementById('ivpPublicNote');
+  if(note){note.textContent='🌍 This ad is now public — anyone with the link sees it playing automatically';note.classList.add('on');}
 }
 function closeM(){document.getElementById('modal1').classList.remove('show');}
 function cc(el,id){document.getElementById(id).textContent=el.value.length+'/'+el.maxLength;}
