@@ -8,7 +8,7 @@
 <meta http-equiv="X-XSS-Protection" content="1; mode=block">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index, follow">
-<title>Register — AdCreator Pro</title>
+<title>Register — GlobalAd</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -85,6 +85,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .login-link{text-align:center;margin-top:1rem;font-size:.78rem;color:var(--muted)}
 .login-link a{color:var(--accent);font-weight:600;text-decoration:none}
 
+/* Logout button on success screen */
+.logout-btn{width:100%;margin-top:1.2rem;padding:12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s}
+.logout-btn:hover{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08)}
+
 @media(max-width:680px){
   .reg-grid{grid-template-columns:1fr}
   .code-card{position:static;order:-1}
@@ -95,7 +99,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 <body>
 
 <div class="page-header">
-  <div class="brand">📢 AdCreator Pro</div>
+  <div class="brand">📢 GlobalAd</div>
   <p>Create your account to start running global ad campaigns</p>
 </div>
 
@@ -198,7 +202,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <button class="code-copy-btn" onclick="copyCode()">📋 Copy Code</button>
     <button class="code-regen-btn" onclick="regenCode()">🔄 Generate New Code</button>
     <div class="code-warn">
-      ⚠️ Do not share this code with anyone except AdCreator Pro support.
+      ⚠️ Do not share this code with anyone except GlobalAd support.
     </div>
   </div>
 
@@ -214,6 +218,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
   <p style="margin-top:.5rem;font-size:.72rem">⬆️ Save your 8-digit code above. You will need it to contact support.</p>
   <br>
   <a href="#" style="color:var(--accent);font-size:.82rem;font-weight:600;text-decoration:none">Go to Login →</a>
+  <button class="logout-btn" onclick="doLogout()">🚪 Logout &amp; Register New Account</button>
 </div>
 
 <script>
@@ -331,9 +336,46 @@ function doRegister(){
     document.getElementById('successCode').textContent = currentCode;
   }, 1500);
 }
+
+/* ─── Logout: reset form so a new registration can be done ─── */
+function doLogout(){
+  // Clear all input fields
+  ['fullName','houseNo','roadNo','policeStation','district','regEmail','regPw','regCPw']
+    .forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('agreeTerms').checked = false;
+
+  // Clear all error states
+  ['fullName','houseNo','roadNo','policeStation','district','regEmail','regPw','regCPw']
+    .forEach(id => setErr(id, false));
+  document.getElementById('e-terms').classList.remove('show');
+
+  // Reset password strength meter
+  document.getElementById('sfill').style.width = '0%';
+  document.getElementById('sfill').style.background = 'var(--border)';
+  document.getElementById('stxt').textContent = 'Strength: not entered';
+
+  // Reset password visibility toggles back to hidden
+  ['regPw','regCPw'].forEach(id=>{
+    const i = document.getElementById(id);
+    i.type = 'password';
+  });
+  document.querySelectorAll('.eye').forEach(b => b.textContent = '👁️');
+
+  // Generate a fresh 8-digit code for the next registration
+  regenCode();
+
+  // Reset submit button state and rate-limit counters
+  const btn = document.getElementById('regBtn');
+  btn.disabled = false; btn.textContent = '🔐 Register Securely';
+  rAttempts = 0; rLast = 0;
+
+  // Switch screens: hide success, show registration form again
+  document.getElementById('successCard').style.display = 'none';
+  document.getElementById('regWrap').style.display = 'block';
+
+  // Scroll back to top for a clean start
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
 </script>
 </body>
 </html>
-
-
-
